@@ -9,6 +9,7 @@
 	<script type="text/javascript" src="js/updateCelulaInversa.js"></script>
 	<script type="text/javascript" src="js/gerarMatriz.js"></script>
 	<script type="text/javascript" src="js/paraPar.js"></script>
+	<script type="text/javascript" src="js/gerarInput.js"></script>
 
 	<title>Page Title</title>
 </head>
@@ -115,6 +116,18 @@
 		
 	</div>
 	<button onclick="gerarParaPar(document.getElementsByName('checkCrit'));">Gerar para Par</button>
+
+	<div id="divPaiDeTodos" name="divPaiDeTodos">
+		<input type="radio" id="radioCidade" name="radioEstadoCidade" value="Cidade">
+		<input type="radio" id="radioEstado" name="radioEstadoCidade" value="Estado">
+	</div>
+	<button onclick="gerarInput(
+		document.getElementById('divPaiDeTodos'), 
+		document.getElementsByName('radioEstadoCidade'), 
+		'checkbox', 
+		null, 
+		'IMPLEMENTAR');">Gerar Input</button>
+
 </body>
 
 </html>
