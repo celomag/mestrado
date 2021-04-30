@@ -5,8 +5,8 @@ function obterCriterios(){
     return objetoCriterios;
 }
 
-function obterAgrupamentos(){
-    var arquivoAgrupamento = JSON.parse(agrupamento);
+function obterAlternativas(){
+    var arquivoAgrupamento = JSON.parse(alternativas);
     var objetoAgrupamento = arquivoAgrupamento[0];
     console.log(objetoAgrupamento);
     return objetoAgrupamento;

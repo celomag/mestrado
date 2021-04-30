@@ -6,19 +6,21 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<script type="text/javascript" src="js/updateCelulaInversa.js"></script>
-	<script type="text/javascript" src="js/gerarMatriz.js"></script>
-	<script type="text/javascript" src="js/paraPar.js"></script>
-	<script type="text/javascript" src="js/gerarInputCriterios.js"></script>
-	<script type="text/javascript" src="js/obterArquivos.js"></script>
-
-	<script type="text/javascript" src="arquivos/agrupamento.json"></script>
+	<script type="text/javascript" src="js/popularBody.js"></script>
+	<script type="text/javascript" src="arquivos/alternativas.json"></script>
 	<script type="text/javascript" src="arquivos/criterios.json"></script>
+	<script type="text/javascript" src="js/popularBody.js"></script>
+	<script type="text/javascript" src="js/obterArquivos.js"></script>
+	<script type="text/javascript" src="js/gerarInputCriterios.js"></script>
+	<script type="text/javascript" src="js/gerarInputAlternativas.js"></script>
+	<script type="text/javascript" src="js/gerarMatriz.js"></script>
+	<script type="text/javascript" src="js/updateCelulaInversa.js"></script>
+	<script type="text/javascript" src="js/paraPar.js"></script>
 
 	<title>Título da Página</title>
 </head>
 
-<body>
+<body onload="popularBody()">
 
 	<div class="divCriterio">
 		<div class="cabecalhoCriterio" id="cabecalhoCriterio">
@@ -27,14 +29,15 @@
 		<div class="corpoCriterio" id="corpoCriterio">
 		</div>
 	</div>
-	<div class="divAgrupamento">
-		<div class="cabecalhoAgrupamento" id="cabecalhoAgrupamento">
+	<div class="divAlternativa">
+		<div class="cabecalhoAlternativa" id="cabecalhoAlternativa">
 			<h2>Agrupamento</h2>
 		</div>
-		<div class="corpoAgrupamento" id="corpoAgrupamento">
+		<div class="corpoAlternativa" id="corpoAlternativa">
 		</div>
 	</div>
-	<button onclick="gerarInputCriterios(document.getElementById('corpoCriterio'), obterCriterios());">Gerar para Par</button>
+	<div id="tabelasParaPar"></div>
+	<button onclick="gerarParaPar(document.getElementsByName('chkBoxCriterio'));">Gerar para Par</button>
 </body>
 
 </html>

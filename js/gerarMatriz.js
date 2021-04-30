@@ -16,7 +16,7 @@ function gerarMatriz(nomeTabela, criterios) {
     //Criando uma DIV especifica para a tabela a ser criada
     var divTabelaInterna = document.createElement("div");
     divTabelaInterna.setAttribute("id", "div"+nomeTabela);
-    tabelaCriteriosPrincipal.appendChild(divTabelaInterna);
+    tabelasParaPar.appendChild(divTabelaInterna); //Acessa a DIV (nome fixo, hard code nesta linha) e adicionar uma div interna para as tabelas
 
     //Criando a tabela de acordo com o nome fornecido
     var tabela = document.createElement("TABLE");

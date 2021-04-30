@@ -18,7 +18,9 @@ function gerarParaPar(listaCriterios){ //Devera de ser informado OBRIGATORIAMENT
     }
     
     //Obtendo a lista de radio pertencentes a mesmo grupo de radio
-    var tipoAgrupamento = document.getElementsByName("radioClusterBairros");
+    //HARDCODE, obtem os radios de acordo com o atributo NAME dos mesmos
+    //Caso alterado o atributo name dos radios devera ser alterado o parametro abaixo
+    var tipoAgrupamento = document.getElementsByName("radioAlternativas");
 
     //Verificando a lista qual dos radios esta selecionado para ser trabalho
     for(var i = 0; i < tipoAgrupamento.length; i++){
@@ -26,9 +28,9 @@ function gerarParaPar(listaCriterios){ //Devera de ser informado OBRIGATORIAMENT
             tipoAgrupamento = tipoAgrupamento[i].value;
         }
     }
-    
+
     //Validando se pelo menos um dos radios foi selecionado
-    if(tipoAgrupamento != "Cluster" && tipoAgrupamento != "Bairro"){
+    if(typeof(tipoAgrupamento) != 'string'){
         alert("Selecione um tipo de agrupamento!");
         return;
     }
@@ -44,9 +46,10 @@ function gerarParaPar(listaCriterios){ //Devera de ser informado OBRIGATORIAMENT
         tipoAgrupamentoMax = 9;
     }
 
-
     //Obtendo lista de todos os checkBox que sao pertencentes ao radio obtido anteriormente
-    var listaAgrupamento = document.getElementsByName("check"+tipoAgrupamento);
+    //HARDCODE, Obtem os checkbox de acordo com um padrao chkBoxAlternativa + TipoDoAgrupamento
+    //Caso alterado o atributo name das checkbox de alternativas deverá ser alterado este caminho
+    var listaAgrupamento = document.getElementsByName("chkBoxAlternativa"+tipoAgrupamento);
 
     var selectedAgrupamento = new Array();
 
