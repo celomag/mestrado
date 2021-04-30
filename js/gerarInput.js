@@ -14,6 +14,12 @@ function gerarInput(divPai, radioPai, type, nome, listaInputs){
         }
     }
 
+    var labelTitulo = document.createElement("label");
+    labelTitulo.setAttribute("class", "labelTitulo");
+    labelTitulo.innerHTML = radioPai;
+
+    divPai.appendChild(labelTitulo);
+
     for(var i = 0; i<listaInputs.length; i++){
         var novoInput = document.createElement("input");
         novoInput.setAttribute("type", type);

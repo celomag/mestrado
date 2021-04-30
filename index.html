@@ -9,125 +9,32 @@
 	<script type="text/javascript" src="js/updateCelulaInversa.js"></script>
 	<script type="text/javascript" src="js/gerarMatriz.js"></script>
 	<script type="text/javascript" src="js/paraPar.js"></script>
-	<script type="text/javascript" src="js/gerarInput.js"></script>
+	<script type="text/javascript" src="js/gerarInputCriterios.js"></script>
+	<script type="text/javascript" src="js/obterArquivos.js"></script>
 
-	<title>Page Title</title>
+	<script type="text/javascript" src="arquivos/agrupamento.json"></script>
+	<script type="text/javascript" src="arquivos/criterios.json"></script>
+
+	<title>Título da Página</title>
 </head>
 
 <body>
 
-	<div class="criterio">
-
-		<div class="cabecalhoCriterio">
-			<h1 id="tituloCriterio">Critérios</h1>
-			<p id="subtituloCriterio">Selecione os critérios!</p>
-			<br>
+	<div class="divCriterio">
+		<div class="cabecalhoCriterio" id="cabecalhoCriterio">
+			<h2>Critérios</h2>
 		</div>
-		<div class="check">
-			<label><strong>Acesso ao local</strong></label><br><br>
-			<input type="checkbox" id="crit1" name="checkCrit" value="crit1">
-			<label for="crit1">Distância para rodovias, estradas regionais e nacionais;</label><br>
-			<input type="checkbox" id="crit2" name="checkCrit" value="crit2">
-			<label for="crit2">Distância dos centros urbanos, industriais e comerciais;</label><br>
-			<input type="checkbox" id="crit3" name="checkCrit" value="crit3">
-			<label for="crit3">Congestionamento local;</label><br>
-			<input type="checkbox" id="crit4" name="checkCrit" value="crit4">
-			<label for="crit4">Sistema de transporte;</label><br><br>
+		<div class="corpoCriterio" id="corpoCriterio">
 		</div>
-		<div class="check">
-			<label><strong>Atividades econômicas predominantes na região</strong></label><br><br>
-			<input type="checkbox" id="crit5" name="checkCrit" value="crit5">
-			<label for="crit5">Aceitabilidade vizinhança</label><br>
-			<input type="checkbox" id="crit6" name="checkCrit" value="crit6">
-			<label for="crit6">Sistema de colaboração indústria-governo</label><br>
-			<input type="checkbox" id="crit7" name="checkCrit" value="crit7">
-			<label for="crit7">Índice de criação de empregos</label><br>
-			<input type="checkbox" id="crit8" name="checkCrit" value="crit8">
-			<label for="crit8">Condição socioeconômica local</label><br><br>
-		</div>
-		<div class="check">
-			<label><strong>Concorrência</strong></label><br><br>
-			<input type="checkbox" id="crit9" name="checkCrit" value="crit9">
-			<label for="crit9">Proximidade com a concorrência</label><br><br>
-		</div>
-		<div class="check">
-			<label><strong>Perfil dos moradores da região</strong></label><br><br>
-			<input type="checkbox" id="crit10" name="checkCrit" value="crit10">
-			<label for="crit10">Índice de Desenvolvimento Humano (IDH)</label><br>
-			<input type="checkbox" id="crit11" name="checkCrit" value="crit11">
-			<label for="crit11">Qualidade da infraestrutura do local</label><br>
-			<input type="checkbox" id="crit12" name="checkCrit" value="crit12">
-			<label for="crit12">Vulnerabilidade da população/violência local</label><br><br>
-		</div>
-		<div class="check">
-			<label><strong>Custo</strong></label><br><br>
-			<input type="checkbox" id="crit13" name="checkCrit" value="crit13">
-			<label for="crit13">Preço do terreno/aluguel</label><br>
-			<input type="checkbox" id="crit14" name="checkCrit" value="crit14">
-			<label for="crit14">Custos iniciais, operacionais e de manutenção</label><br><br>
-		</div>
-		<div class="check">
-			<label><strong>Infraestrutura</strong></label><br><br>
-			<input type="checkbox" id="crit15" name="checkCrit" value="crit15">
-			<label for="crit15">Documentação</label><br>
-			<input type="checkbox" id="crit16" name="checkCrit" value="crit16">
-			<label for="crit16">Forma do terreno</label><br>
-			<input type="checkbox" id="crit17" name="checkCrit" value="crit17">
-			<label for="crit17">Funcionalidade, usabilidade e estética</label><br>
-			<input type="checkbox" id="crit18" name="checkCrit" value="crit18">
-			<label for="crit18">Proximidade de locais culturais</label><br><br><br>
-		</div>
-
 	</div>
-
-	<div id="tabelaCriteriosPrincipal" name="tabelaCriteriosPrincipal"></div>
-
-	<div class="agrupamento">
-
-		<h1 id="tituloAgrupamento">Agrupamento</h1>
-
-		<p id="subtituloAgrupamento">De uma nota de 1 à 9 na comparação par a par!</p>
-
-		<div class="check">
-			<input type="radio" id="radioClusters" name="radioClusterBairros" value="Cluster">
-			<label><strong>Agrupamento por clusters</strong></label><br><br>
-			<input type="checkbox" id="cluster1" name="checkCluster" value="cluster1">
-			<label for="cluster1">Cluster 1</label><br>
-			<input type="checkbox" id="cluster2" name="checkCluster" value="cluster2">
-			<label for="cluster2">Cluster 2</label><br>
-			<input type="checkbox" id="cluster3" name="checkCluster" value="cluster3">
-			<label for="cluster3">Cluster 3</label><br>
-			<input type="checkbox" id="cluster4" name="checkCluster" value="cluster4">
-			<label for="cluster4">Cluster 4</label><br><br>
+	<div class="divAgrupamento">
+		<div class="cabecalhoAgrupamento" id="cabecalhoAgrupamento">
+			<h2>Agrupamento</h2>
 		</div>
-
-		<div class="check">
-			<input type="radio" id="radioBairros" name="radioClusterBairros" value="Bairro">
-			<label><strong>Agrupamento de Bairros</strong></label><br><br>
-			<input type="checkbox" id="bairro1" name="checkBairro" value="bairro1">
-			<label for="bairro1">Bairro 1</label><br>
-			<input type="checkbox" id="bairro2" name="checkBairro" value="bairro2">
-			<label for="bairro2">Bairro 2</label><br>
-			<input type="checkbox" id="bairro3" name="checkBairro" value="bairro3">
-			<label for="bairro3">Bairro 3</label><br>
-			<input type="checkbox" id="bairro4" name="checkBairro" value="bairro4">
-			<label for="bairro4">Bairro 4</label><br>
+		<div class="corpoAgrupamento" id="corpoAgrupamento">
 		</div>
-		
 	</div>
-	<button onclick="gerarParaPar(document.getElementsByName('checkCrit'));">Gerar para Par</button>
-
-	<div id="divPaiDeTodos" name="divPaiDeTodos">
-		<input type="radio" id="radioCidade" name="radioEstadoCidade" value="Cidade">
-		<input type="radio" id="radioEstado" name="radioEstadoCidade" value="Estado">
-	</div>
-	<button onclick="gerarInput(
-		document.getElementById('divPaiDeTodos'), 
-		document.getElementsByName('radioEstadoCidade'), 
-		'checkbox', 
-		null, 
-		'IMPLEMENTAR');">Gerar Input</button>
-
+	<button onclick="gerarInputCriterios(document.getElementById('corpoCriterio'), obterCriterios());">Gerar para Par</button>
 </body>
 
 </html>
