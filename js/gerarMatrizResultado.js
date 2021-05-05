@@ -1,3 +1,16 @@
+function teste(){
+    var listaCriterios = document.getElementsByName('chkBoxCriterio')
+    var listaAgrupamento = document.getElementsByName("chkBoxAlternativaCluster");
+    //Percorrendo a lista original e verificando os valores selecionados
+    //Ao encontrar adiciona na lista de apenas valores selecionados
+    for (var i = 0; i < 4; i++) {
+        listaCriterios[i].checked = true;
+        listaAgrupamento[i].checked = true;
+    }
+    gerarParaPar(listaCriterios);
+    gerarMatrizResultado();
+}
+
 function gerarMatrizResultado(){
 
     divTabelasParaPar = document.getElementById("tabelasParaPar");
@@ -9,85 +22,49 @@ function gerarMatrizResultado(){
         var tabelaAlternativaI = divAlternativaI.childNodes[1].id; //1 = Posicao da tabela dentro da div
     }
 
-    var tamanhoMatriz = 0;
-    var radioList = document.getElementsByName("radioAlternativas");
+    //TESTE - TESTE - TESTE  - TESTE  - TESTE  - TESTE  - TESTE 
+    //TESTE - TESTE - TESTE  - TESTE  - TESTE  - TESTE  - TESTE 
 
-    for(var i = 0; i < radioList.length; i++){
-        if(radioList[i].checked){
-            var checkBoxList = document.getElementsByName("chkBoxAlternativa"+radioList[i].value);
-            for(var y = 0; y < checkBoxList.length; y++){
-                if(checkBoxList[y].checked){
-                    tamanhoMatriz++;
-                }
-            }
-            break
+    var matriz = obterTabelaComoMatriz("tb_criterios");
+    for(var x = 0; x < matriz.length; x++){
+        for(var y = 0; y < matriz.length; y++){
+            matriz[x][y] = parseFloat(matriz[x][y]);
         }
     }
 
-
-
-    //TESTE - TESTE - TESTE  - TESTE  - TESTE  - TESTE  - TESTE 
-    //TESTE - TESTE - TESTE  - TESTE  - TESTE  - TESTE  - TESTE 
-
-    var linhas = 4; 
-    var colunas = 4; 
-    var matriz = new Array(colunas); 
-
-    for (var i = 0; i < colunas; i++) {
-        matriz[i] = new Array(linhas); 
-    }
-
-    matriz[0][0] = 1.000;
-	matriz[0][1] = 5.000;
-	matriz[0][2] = 7.000;
-	matriz[0][3] = 0.333;
-	matriz[1][0] = 0.200;
-	matriz[1][1] = 1.000;
-	matriz[1][2] = 3.000;
-	matriz[1][3] = 0.143;
-	matriz[2][0] = 0.143;
-	matriz[2][1] = 0.333;
-	matriz[2][2] = 1.000;
-	matriz[2][3] = 0.111;
-	matriz[3][0] = 3.000;
-	matriz[3][1] = 7.000;
-	matriz[3][2] = 9.000;
-	matriz[3][3] = 1.000;
-
-    //FIM DA MATRIZ INICIAL
-
-    var linhas = matriz.length;
-    var colunas = matriz.length;
-    var calculoDoVetorPrioridade = new Array(colunas); 
+    var calculoDoVetorPrioridade = new Array(matriz.length); 
 
     //Criando Matriz 1
-    for (var i = 0; i < colunas; i++) {
-        calculoDoVetorPrioridade[i] = new Array(linhas); 
+    for (var i = 0; i < matriz.length; i++) {
+        calculoDoVetorPrioridade[i] = new Array(matriz.length); 
     }
 
     //Normalizacao Parte 1 - Matriz 1
-    for(var l = 0; l < matriz.length; l++){
-        for (var c = 0; c < matriz.length; c++) {
+    for(var l = 0; l < calculoDoVetorPrioridade.length; l++){
+        for (var c = 0; c < calculoDoVetorPrioridade.length; c++) {
             var soma = 0.0;
-            for(var i = 0; i < matriz.length; i++){
+            for(var i = 0; i < calculoDoVetorPrioridade.length; i++){
                 soma += matriz[i][c];
             }
-            calculoDoVetorPrioridade[l][c] = matriz[l][c]/soma;
+            calculoDoVetorPrioridade[l][c] = parseFloat((matriz[l][c]/soma).toFixed(3));
         }
     }
+
     gerarTabela("Calculo Do Vetor Prioridade", calculoDoVetorPrioridade);
 
     //Normalizacao Parte 2 - Vetor 1 - Vetor Prioridade da Matriz 1
     var vetorPrioridade = new Array(matriz.length);
-
+    var validacao = 0;
     for(var l = 0; l < matriz.length; l++){
         var soma = 0.0;
         for (var c = 0; c < matriz.length; c++) {
             soma += calculoDoVetorPrioridade[l][c];
         }
-        vetorPrioridade[l] = soma/matriz.length;
+        vetorPrioridade[l] =  parseFloat((soma/matriz.length).toFixed(3));
+        validacao += vetorPrioridade[l];
     }
     gerarTabela("Vetor Prioridade", vetorPrioridade);
+    gerarTabela("Validação do Vetor Prioridade", validacao);
 
     //Normalizacao Parte 3 - Matriz 2
     //Gerando matriz resultante da multiplicação de cada célula da matriz original
@@ -103,7 +80,6 @@ function gerarMatrizResultado(){
     }
 
     for(var l = 0; l < matriz.length; l++){
-        var soma = 0.0;
         for (var c = 0; c < matriz.length; c++) {
             matriz2[l][c] = matriz[l][c] * vetorPrioridade[c];
         }
@@ -150,8 +126,12 @@ function gerarMatrizResultado(){
     //Gerando valor CR pela formula
     var CR = 0;
     CR = CI/escalaDeSat(matriz.length);
+    CR = parseFloat((CR).toFixed(3));
     gerarTabela("CR", CR);
 }
+
+
+
 
 function gerarTabela(tituloTabela, matriz){
 

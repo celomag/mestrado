@@ -1,5 +1,5 @@
 function gerarMatriz(nomeTabela, tituloTabela, criterios) {
-    
+
     /*
     Tentando obter um elemento com o nome da tabela que esta sendo informada
     Caso obter quer dizer que já existe a tabela que esta tentando ser criada
@@ -9,7 +9,7 @@ function gerarMatriz(nomeTabela, tituloTabela, criterios) {
     //Validando se já existe a tabela a tabela informada no parametro
     //Se existir não terá como criar a mesma novamente
     if(typeof(novaTabela) != 'undefined' && novaTabela != null){
-        alert("DIV com nome: "+nomeTabela+" já existe!");
+        alert("Tabela: "+nomeTabela+" já existe!");
         return;
     }
 
@@ -53,9 +53,8 @@ function gerarMatriz(nomeTabela, tituloTabela, criterios) {
 
             //Criando um elemento select para adicionar na celula da linha acima
             var select = document.createElement("SELECT");
-            select.setAttribute("id", tabela.id + "L" + x + "C" + y);
-            select.setAttribute("name", "L" + x + "C" + y);
-            select.setAttribute("onchange", "updateCelulaInversa(" + select.getAttribute("id") + ")" );
+            select.setAttribute("id", tabela.id + "_L" + x + "_C" + y);
+            select.setAttribute("onchange", "inveterValorTabela('" +  tabela.getAttribute("id") + "'," + x +"," + y + ");" );
             
             //Inserindo uma celula na linha e atribuindo o SELECT criado a esta celula
             var cell = linha.insertCell(-1);
@@ -66,9 +65,9 @@ function gerarMatriz(nomeTabela, tituloTabela, criterios) {
                 var option = document.createElement("option");
                 var t = document.createTextNode(1);
                 option.appendChild(t);
-                document.getElementById(select.getAttribute("id")).appendChild(option);
-                document.getElementById(select.getAttribute("id")).disabled = true;
-                document.getElementById(select.getAttribute("id")).style.backgroundColor = "black";
+                select.appendChild(option);
+                select.disabled = true;
+                select.style.backgroundColor = "black";
             }
             else{//Adicionando opcao de 1 ate 9 no SELECT atual
                 for (var o = 1; o < 10; o++) {
@@ -76,7 +75,7 @@ function gerarMatriz(nomeTabela, tituloTabela, criterios) {
                     option.setAttribute("value", o);
                     var t = document.createTextNode(o);
                     option.appendChild(t);
-                    document.getElementById(select.getAttribute("id")).appendChild(option);
+                    select.appendChild(option);
                 }
             }
             /*Verificando se a posicao atual é a ultima da linha, caso for ira adicionar no inicio
@@ -88,6 +87,51 @@ function gerarMatriz(nomeTabela, tituloTabela, criterios) {
             
         }
 
+    }
+    if(tabela.id == "tb_criterios"){
+        inserirValorTeste("tb_criterios");
+    }
+
+}
+
+function inserirValorTeste(nomeTabela){
+    var matrizTeste = new Array(4); 
+    for (var i = 0; i < 4; i++) {
+        matrizTeste[i] = new Array(4); 
+    }
+
+    matrizTeste[0][0] = 1.000;
+	matrizTeste[0][1] = 5.000;
+	matrizTeste[0][2] = 7.000;
+	matrizTeste[0][3] = 0.333;
+	matrizTeste[1][0] = 0.200;
+	matrizTeste[1][1] = 1.000;
+	matrizTeste[1][2] = 3.000;
+	matrizTeste[1][3] = 0.143;
+	matrizTeste[2][0] = 0.143;
+	matrizTeste[2][1] = 0.333;
+	matrizTeste[2][2] = 1.000;
+	matrizTeste[2][3] = 0.111;
+	matrizTeste[3][0] = 3.000;
+	matrizTeste[3][1] = 7.000;
+	matrizTeste[3][2] = 9.000;
+	matrizTeste[3][3] = 1.000;
+
+    var tabela = document.getElementById(nomeTabela);
+    //var options = celula.getElementsByTagName("option");
+
+    for(var x = 0; x < 4; x++){
+        for(var y = 0; y < 4; y++){
+            var celula = tabela.rows[x+1].cells[y+1];
+            var select = celula.getElementsByTagName("select")[0]; //[0] pois só há 1 unico select na lista    
+            var option = document.createElement("option");
+            option.setAttribute("value", matrizTeste[x][y]);
+            var t = document.createTextNode(matrizTeste[x][y]);
+            option.appendChild(t);
+            option.selected = true;
+            option.disabled = true;
+            select.add(option, 0);
+        }
     }
 
 }

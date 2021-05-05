@@ -6,21 +6,22 @@ function filtrarAlternativasRadio(radioName){
 
     //Validando se já existe a div obtida
     //Se existir deverá limpar as tabelas para mudar a alternativa
-    if(typeof(divcriterios) != 'undefined' && divcriterios != null){
-        if (confirm('Mudar a alternativa irá excluir as tabelas existentes, deseja continuar?')) {
-            //DIV que contem todas as tabelas/divs das tabelas
-            document.getElementById("tabelasParaPar").innerHTML = '';
-        } else {
-            var radioAnterior = document.getElementById("radioAnteriorAlternativa");
-            var radioElementList = document.getElementsByName(radioName);
-            for(var i = 0; i < radioElementList.length; i++){
-                if(radioElementList[i].id == radioAnterior.value || radioAnterior.value == ''){
-                    radioElementList[i].checked = true;
-                    return;
-                }
-            }
-        }
-    }
+    // if(typeof(divcriterios) != 'undefined' && divcriterios != null){
+    //     if (confirm('Mudar a alternativa irá excluir as tabelas existentes, deseja continuar?')) {
+    //         //DIV que contem todas as tabelas/divs das tabelas
+    //         document.getElementById("tabelasParaPar").innerHTML = '';
+    //     } else {
+    //         //Deixa como selecionado a ultima radio selecionada, pois o ususario cancelou a mudança de alternativa
+    //         var radioAnterior = document.getElementById("radioAnteriorAlternativa");
+    //         var radioElementList = document.getElementsByName(radioName);
+    //         for(var i = 0; i < radioElementList.length; i++){
+    //             if(radioElementList[i].id == radioAnterior.value || radioAnterior.value == ''){
+    //                 radioElementList[i].checked = true;
+    //                 return;
+    //             }
+    //         }
+    //     }
+    // }
 
     //Obtem uma lista de radios de acordo o o atributo name presente nele
     var radioElementList = document.getElementsByName(radioName);

@@ -75,12 +75,12 @@ function gerarParaPar(listaCriterios){ //Devera de ser informado OBRIGATORIAMENT
     }
     
     //Desabilitando as checkbox das radios após gerar o paraPar
-    var radioList = document.getElementsByName("radioAlternativas");
-    for(var i = 0; i < radioList.length; i++){
-        var checkBoxList = document.getElementsByName("chkBoxAlternativa"+radioList[i].value);
-        for(var y = 0; y < checkBoxList.length; y++){
-            checkBoxList[y].disabled = true;
-        }
-    }
+    // var radioList = document.getElementsByName("radioAlternativas");
+    // for(var i = 0; i < radioList.length; i++){
+    //     var checkBoxList = document.getElementsByName("chkBoxAlternativa"+radioList[i].value);
+    //     for(var y = 0; y < checkBoxList.length; y++){
+    //         checkBoxList[y].disabled = true;
+    //     }
+    // }
 
 }
