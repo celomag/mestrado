@@ -1,4 +1,4 @@
-function gerarMatriz(nomeTabela, criterios) {
+function gerarMatriz(nomeTabela, tituloTabela, criterios) {
     
     /*
     Tentando obter um elemento com o nome da tabela que esta sendo informada
@@ -16,6 +16,10 @@ function gerarMatriz(nomeTabela, criterios) {
     //Criando uma DIV especifica para a tabela a ser criada
     var divTabelaInterna = document.createElement("div");
     divTabelaInterna.setAttribute("id", "div"+nomeTabela);
+    var labelTituloTabela = document.createElement("h2");
+    labelTituloTabela.innerHTML = tituloTabela;
+    divTabelaInterna.appendChild(labelTituloTabela);
+
     tabelasParaPar.appendChild(divTabelaInterna); //Acessa a DIV (nome fixo, hard code nesta linha) e adicionar uma div interna para as tabelas
 
     //Criando a tabela de acordo com o nome fornecido
@@ -79,7 +83,6 @@ function gerarMatriz(nomeTabela, criterios) {
             uma celula contendo o nome da respectiva linha*/
             if(y == criterios.length){
                 var coluna = linha.insertCell(0);
-                console.log(criterios[x-1]); //Vetor inicia em 0, for esta iniciando em 1 por isso a correcao
                 coluna.innerHTML = criterios[x-1]; //Vetor inicia em 0, for esta iniciando em 1 por isso a correcao
             }
             

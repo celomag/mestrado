@@ -31,7 +31,7 @@ function gerarParaPar(listaCriterios){ //Devera de ser informado OBRIGATORIAMENT
 
     //Validando se pelo menos um dos radios foi selecionado
     if(typeof(tipoAgrupamento) != 'string'){
-        alert("Selecione um tipo de agrupamento!");
+        alert("Selecione um tipo de alternativa!");
         return;
     }
 
@@ -62,16 +62,25 @@ function gerarParaPar(listaCriterios){ //Devera de ser informado OBRIGATORIAMENT
 
     //Validando se o numero de checkbox selecionados esta dentro da regra
     if (selectedAgrupamento.length > tipoAgrupamentoMax || selectedAgrupamento.length < 3){
-        alert("Selecione no máximo " + tipoAgrupamentoMax + " e no mínimo 3 para o agrupamento.");
+        alert("Selecione no máximo " + tipoAgrupamentoMax + " e no mínimo 3 para a alternativa.");
         return
     }
 
     //Gerando uma tabela de acordo com o nome informado e lista de dados
-    gerarMatriz("criterios" , selectedCriterios);
+    gerarMatriz("criterios" , "Critérios", selectedCriterios);
 
     //Gerando matriz de agrupamento de acordo com o numero de criterios informados
     for(var i = 0 ; i < selectedCriterios.length; i++){
-        gerarMatriz(tipoAgrupamento + i, selectedAgrupamento);
+        gerarMatriz(tipoAgrupamento + i, selectedCriterios[i], selectedAgrupamento);
+    }
+    
+    //Desabilitando as checkbox das radios após gerar o paraPar
+    var radioList = document.getElementsByName("radioAlternativas");
+    for(var i = 0; i < radioList.length; i++){
+        var checkBoxList = document.getElementsByName("chkBoxAlternativa"+radioList[i].value);
+        for(var y = 0; y < checkBoxList.length; y++){
+            checkBoxList[y].disabled = true;
+        }
     }
 
 }

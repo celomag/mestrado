@@ -8,6 +8,10 @@ function gerarInputAlternativas(divPai, jsonAlternativas){
         tipoAlternativa.setAttribute("id", "radio"+jsonAlternativas.alternativas[i].titulo);
         tipoAlternativa.setAttribute("value", jsonAlternativas.alternativas[i].titulo);
         tipoAlternativa.setAttribute("name", "radioAlternativas");
+        if(i == 0){ //Deixa pré habilitado o primeiro radio
+            tipoAlternativa.checked = true;
+        }
+        tipoAlternativa.setAttribute("onChange", "filtrarAlternativasRadio('"+ tipoAlternativa.name +"');");
 
         labelAlternativa = document.createElement("label");
         labelAlternativa.innerHTML = tipoAlternativa.value;
@@ -27,6 +31,9 @@ function gerarInputAlternativas(divPai, jsonAlternativas){
             novoInput.setAttribute("type", "checkbox");
             novoInput.setAttribute("id","inputAlternativa"+i+"_"+y);
             novoInput.setAttribute("name", "chkBoxAlternativa"+jsonAlternativas.alternativas[i].titulo);
+            if(i != 0){ //Deixa pré desabilitado por nao ser pertencente ao primeiro radio
+                novoInput.disabled = true;
+            }
 
             labelNovoInput = document.createElement("label");
             labelNovoInput.setAttribute("for", novoInput.id);
