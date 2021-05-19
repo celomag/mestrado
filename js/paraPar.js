@@ -3,6 +3,7 @@ function gerarParaPar(){ //Devera de ser informado OBRIGATORIAMENTE a lista de c
     if(document.getElementById("tb_criterios") != null){
         if(confirm("Já existe um para par, deseja efetuar um novo?")){
             document.getElementById("tabelasParaPar").innerHTML = "";
+            document.getElementById("divTabelaResultado").innerHTML = "";
         }else{
             return
         }
