@@ -45,7 +45,7 @@ function inveterValorTabela(nomeTabela, linha, coluna){
     var valorCalculado = parseFloat(valorCalculado.toFixed(3)); //Limitando caracteres de resultado em centena
     var textNode = document.createTextNode(valorCalculado);
     optionResultado.appendChild(textNode);
-
+    
     var tabela = document.getElementById(nomeTabela);
     var celula = tabela.rows[coluna].cells[linha];
     var select = celula.getElementsByTagName("select")[0]; //[0] pois só há 1 unico select na lista
@@ -56,6 +56,5 @@ function inveterValorTabela(nomeTabela, linha, coluna){
         select.add(optionResultado, 0);
         return;
     }
-
     select.add(optionResultado, 0);
 }

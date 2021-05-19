@@ -1,5 +1,16 @@
-function gerarParaPar(listaCriterios){ //Devera de ser informado OBRIGATORIAMENTE a lista de criterios
+function gerarParaPar(){ //Devera de ser informado OBRIGATORIAMENTE a lista de criterios
     
+    if(document.getElementById("tb_criterios") != null){
+        if(confirm("Já existe um para par, deseja efetuar um novo?")){
+            document.getElementById("tabelasParaPar").innerHTML = "";
+        }else{
+            return
+        }
+    }
+
+    //Obtendo listra de criterios de acordo com o name presente nos checkbox de critério
+    var listaCriterios = document.getElementsByName('chkBoxCriterio')
+
     //Criando uma nova lista com apenas os valores selecionados
     var selectedCriterios = new Array();
 

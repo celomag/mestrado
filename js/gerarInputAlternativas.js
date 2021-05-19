@@ -2,7 +2,17 @@
 //listaInputs = Lista JSON das alternativas;
 function gerarInputAlternativas(divPai, jsonAlternativas){
 
+    divCorpoAlternativa = divPai
+
     for(var i = 0; i < jsonAlternativas.alternativas.length; i++){
+        //Criando uma div para ficar dentro da DIV "tabelaResultado"
+        //Esta div devera conter todos os checkbox
+        var divNova = document.createElement("div");
+        divNova.setAttribute("id", "divRatio"+jsonAlternativas.alternativas[i].titulo);
+        
+        //Adicionando a DIV "divNova" na DIV pai "divCorpoAlternativa"
+        divCorpoAlternativa.appendChild(divNova)
+        
         var tipoAlternativa = document.createElement("input");
         tipoAlternativa.setAttribute("type", "radio");
         tipoAlternativa.setAttribute("id", "radio"+jsonAlternativas.alternativas[i].titulo);
@@ -19,11 +29,11 @@ function gerarInputAlternativas(divPai, jsonAlternativas){
         labelAlternativa.setAttribute("class", "grupoAlternativa");
         labelAlternativa.setAttribute("for", tipoAlternativa.id);
 
-        divPai.appendChild(tipoAlternativa);
-        divPai.appendChild(labelAlternativa);
+        divNova.appendChild(tipoAlternativa);
+        divNova.appendChild(labelAlternativa);
 
         pularLinha = document.createElement("br");
-        divPai.appendChild(pularLinha);
+        divNova.appendChild(pularLinha);
 
         for(var y = 0; y < jsonAlternativas.alternativas[i].listaOpcoes.length ; y++){
 
@@ -39,15 +49,15 @@ function gerarInputAlternativas(divPai, jsonAlternativas){
             labelNovoInput.setAttribute("for", novoInput.id);
             labelNovoInput.innerHTML = jsonAlternativas.alternativas[i].listaOpcoes[y];
 
-            divPai.appendChild(novoInput);
-            divPai.appendChild(labelNovoInput);
+            divNova.appendChild(novoInput);
+            divNova.appendChild(labelNovoInput);
 
             pularLinha = document.createElement("br");
-            divPai.appendChild(pularLinha);
+            divNova.appendChild(pularLinha);
         }
 
         pularLinha = document.createElement("br");
-        divPai.appendChild(pularLinha);
+        divNova.appendChild(pularLinha);
 
     }
 

@@ -3,35 +3,189 @@ function teste(){
     var listaAgrupamento = document.getElementsByName("chkBoxAlternativaCluster");
     //Percorrendo a lista original e verificando os valores selecionados
     //Ao encontrar adiciona na lista de apenas valores selecionados
-    for (var i = 0; i < 4; i++) {
+    for (var i = 0; i < 3; i++) {
         listaCriterios[i].checked = true;
         listaAgrupamento[i].checked = true;
     }
+    listaAgrupamento[3].checked = true;
     gerarParaPar(listaCriterios);
-    gerarMatrizResultado();
+    gerarRanqueamento();
 }
 
-function gerarMatrizResultado(){
+function gerarRanqueamento(){
 
-    divTabelasParaPar = document.getElementById("tabelasParaPar");
-
-    //Inicia I = 1 devido a primeira DIV ser a tabela de critérios
-    for(var i = 1; i <  divTabelasParaPar.childNodes.length; i++){
-        //Acessando uma DIV que contem todas as tabelas (cada tabela tem como pai uma DIV)
-        var divAlternativaI = divTabelasParaPar.childNodes[i]; //Obtendo a DIV da respectiva tabela
-        var tabelaAlternativaI = divAlternativaI.childNodes[1].id; //1 = Posicao da tabela dentro da div
+    if(document.getElementById("tb_criterios") == null){
+        alert("Necessário gerar o para par antes de exibir o ranqueamento")
+        return
+    }
+    if(document.getElementById("tb_ranqueamento") != null){
+        if(confirm("Já existe um ranquemento, deseja efetuar um novo?")){
+            document.getElementById("divTabelaResultado").innerHTML = "";
+        }else{
+            return
+        }
     }
 
-    //TESTE - TESTE - TESTE  - TESTE  - TESTE  - TESTE  - TESTE 
-    //TESTE - TESTE - TESTE  - TESTE  - TESTE  - TESTE  - TESTE 
+    //Utilizado para obter os valores para os calculos
+    var divTabelasParaPar = document.getElementById("tabelasParaPar"); //DIV
+    
+    //Local utilizado para ser "pai" da div/tabela resultante
+    var tabelaResultado = document.getElementById("divTabelaResultado"); //DIV
 
-    var matriz = obterTabelaComoMatriz("tb_criterios");
+    //Criando uma div para ficar dentro da DIV "tabelaResultado"
+    var divTabelaInterna = document.createElement("div");
+    divTabelaInterna.setAttribute("id", "divRanqueamento");
+    var labelRanqueamento = document.createElement("h2");
+    labelRanqueamento.innerHTML = "Ranqueamento";
+    divTabelaInterna.appendChild(labelRanqueamento);
+
+    //Adicionando a DIV "divRanqueamento" na DIV pai "divtabelaResultado"
+    tabelaResultado.appendChild(divTabelaInterna)
+
+    //Criando a tabela
+    var tabela = document.createElement("TABLE");
+    tabela.setAttribute("id", "tb_ranqueamento");
+    tabela.setAttribute("border", "1");
+    tabela.setAttribute("color", "black");
+    
+    //Adicionando a tabela a DIV criada (divRanqueamento)
+    divTabelaInterna.appendChild(tabela);
+
+     //Criando cabecalho da tabela e primeira celula em branco
+     var cabecalho = tabela.createTHead();
+     var linhaCabecalho = cabecalho.insertRow(0);
+     var headerCell = document.createElement("TH");
+     headerCell.innerHTML = "";
+     linhaCabecalho.appendChild(headerCell);
+
+     //Criando corpo da tabela
+     tbody = tabela.createTBody() 
+
+    //Obtendo a tabela criterios e adicionando cada item do cabecalho da tabela de criterios no cabecalho da Ranqueamento
+    var tabelaCriterios = document.getElementById("tb_criterios");
+    var cabecalhoCriterios = tabelaCriterios.rows[0] //Acessando primera linha que é a do cabecalho que contem o nome dos criterios
+    for(var x = 1; x <  tabelaCriterios.rows.length; x++){ // x =1 pois o primeiro item e vazio
+        var headerCell = document.createElement("TH");
+        headerCell.innerHTML = cabecalhoCriterios.cells[x].innerHTML;
+        linhaCabecalho.appendChild(headerCell);
+    }
+
+    //Adicionando a ultima celula do cabecalho, contendo texto "Prioridade"
+    var headerCell = document.createElement("TH");
+    headerCell.innerHTML = "Prioridade";
+    linhaCabecalho.appendChild(headerCell);
+
+    //Criando segunda linha da tabela e adicionando primeira celula com nome de Pesos prioridade
+    var linha = tbody.insertRow(-1);
+    var headerCell = document.createElement("TH");
+    headerCell.innerHTML = "Pesos prioridade";
+    linha.appendChild(headerCell);
+
+    //Obtendo o nome das ALTERNATIVAS de uma tabela de alternativa existente para ser inserido no inicio da cada linha de tabela ranqueamento
+    var divPaiTabelaAlternativas = divTabelasParaPar.childNodes[1]; //1 pois é a primeira div que contem tabela alternativa
+    var tabelaAlternativa = divPaiTabelaAlternativas.childNodes[1] //1 pois é a posicao da tabela dentro da div, 0 seria o H2
+    var cabecalhoAlternativa = tabelaAlternativa.rows[0] //Acessando primera linha que é a do cabecalho que contem o nome da alternativa
+   
+    //Inserindo cada nome obtido no inicio da cada linha da nova tabela
+    /* EXEMPLO:
+                    |Criterio1|Criterio2|Criterio3|Prioridade
+    Pesos prioridade| 
+    ->  Alternativa1|
+    ->  Alternativa2|
+    ->  Alternativa3|
+    */
+    for(var x = 1; x <  tabelaAlternativa.rows.length; x++){ // x =1 pois o primeiro item e vazio
+        var headerCell = document.createElement("TH");
+        headerCell.innerHTML = "Prioridade";
+        var linha = tbody.insertRow(-1);
+        headerCell.innerHTML =  cabecalhoAlternativa.cells[x].innerHTML; //Acessado a celula com o nome das alternativas
+        linha.appendChild(headerCell);
+    }
+
+    // !! ESTA MATRIZ IRA CONTER TODOS OS VALORES QUE ESTAO NA TABELA CRIADA PARA PODER SER ACESSADO FACILMENTE OS VALORES SEM NECESSIDADE DE CONVERSAO
+    var matrizDaTabela = new Array(tabela.rows.length-1); // -1 pois a primera linha(posicao 0) é a do cabecalho
+    for(var i = 0; i <  tabela.rows.length-1; i++){ // -1 pois a primera linha(posicao 0) é a do cabecalho
+        matrizDaTabela[i] = new Array(tabela.rows[0].cells.length-2) //-2 pois deve ignorar a primeira celula que é a que contem os nomes das alternativas e a ultima que é a de resultados
+    }
+
+    // !! IMPORTANTE !!
+    //Criando uma matriz que ira conter TODOS OS VETORES PRIORIDADES DE TODAS AS TABELAS
+    var matrizDoVetorPrioridade = new Array();
+
+    //Obtendo o calculoDoVetorPrioridade de cada tabela e inserindo na matriz
+    for(var i = 0; i <  divTabelasParaPar.childNodes.length; i++){
+        var divPaiTabela = divTabelasParaPar.childNodes[i]; //Obtendo a DIV da respectiva tabela
+        var idTabela = divPaiTabela.childNodes[1].id; //1 = Posicao da tabela dentro da div
+        matrizDoVetorPrioridade.push(gerarMatrizResultado(idTabela))
+    }
+
+    //Adicionando o Vetor prioridade da tabela critérios o unico que é adicionado na mesma linha na tabela
+    for(var y = 0; y <  matrizDoVetorPrioridade[0].length; y++){ // 0 é o vetor priodade da tabela critérios, acessando os valores dele
+        var cell = tabela.rows[1].insertCell(-1) //1 a primeira linha depois do cabecalho (linha que contem o pesos prioridade)
+        cell.innerHTML = matrizDoVetorPrioridade[0][y] //Adicionando apenas o primeiro vetor
+        matrizDaTabela[0][y] = matrizDoVetorPrioridade[0][y] //Salvando na matriz da tabela a primeira linha de valores que consta na tabela
+    }
+
+    //VALORES PARA TESTE
+    /* TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE */
+    // matrizDoVetorPrioridade[2][0] = 0.090
+    // matrizDoVetorPrioridade[2][1] = 0.574
+    // matrizDoVetorPrioridade[2][2] = 0.291
+    // matrizDoVetorPrioridade[2][3] = 0.044
+
+    // matrizDoVetorPrioridade[3][0] = 0.256
+    // matrizDoVetorPrioridade[3][1] = 0.576
+    // matrizDoVetorPrioridade[3][2] = 0.117
+    // matrizDoVetorPrioridade[3][3] = 0.051
+    /* TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE */
+
+    //Adicionando os vetores na nova tabela de acordo com a regra do calculo
+    //Exemplo: 
+    //  CABECALHO |CRITERIO1   |CRITERIO2   |CRITERIO3   |Prioridade
+    //Alternativa1|Vetor1:Item0|Vetor2:Item0|Vetor3:Item0|calculoDaPrioridade (Esse calculo e feito na repeticao depois)
+    //Alternativa2|Vetor1:Item1|Vetor2:Item1|Vetor3:Item1|calculoDaPrioridade
+    for(var y = 0; y <  matrizDoVetorPrioridade[1].length; y++){ // 1 ignora o vetor prioridades dos criterios e precisa saber quantos criterios
+        for(var x = 1; x <  matrizDoVetorPrioridade.length; x++){ 
+            var cell = tabela.rows[y+2].insertCell(-1) //y+2 pois precisa ignorar a linha do vetor prioridade da tabela criterios e precisa ignorar tambem o cabecalho da tabela
+            cell.innerHTML = matrizDoVetorPrioridade[x][y] //x-y - acessando linha e depois coluna
+            matrizDaTabela[y+1][x-1] = matrizDoVetorPrioridade[x][y] //+1 -1 pois precisa acessar coluna depois linha
+        }
+    }
+
+    //calculoDaPrioridade
+    for(var x = 1; x <  matrizDaTabela.length; x++){ // x = 1 ignora o primeiro vetor que é o vetor prioridade 
+        var calculoDaPrioridade = 0
+        for(var y = 0; y <  matrizDaTabela[x].length; y++){
+            calculoDaPrioridade += matrizDaTabela[x][y] * matrizDaTabela[0][y] //multiplicando pelo valor do vetor prioridade da tabela criterios
+        }
+        var cell = tabela.rows[x+1].insertCell(-1) //+1 ignora  cabecalho da tabela
+        cell.innerHTML = calculoDaPrioridade
+    }
+
+}
+
+//Normalizacao de uma tabela
+function gerarMatrizResultado(idTabela){
+
+    var tabelaResultado = document.getElementById("divTabelaResultado"); //DIV Pai de todas as div que contem resultados
+    var tabelaFonte = document.getElementById(idTabela); //Tabela que esta tendo seus calculos efetuados
+    
+    //Criando uma div para ficar dentro da DIV "tabelaResultado"
+    var divNovaTabelaResultado = document.createElement("div");
+    divNovaTabelaResultado.setAttribute("id", "divNormalizacao_" + idTabela);
+    var labelTabelaResultado = document.createElement("h2");
+    labelTabelaResultado.innerHTML = "Normalização: " + tabelaFonte.parentNode.firstChild.innerHTML; //Acessando o H2 (Titulo dessa tabela) que esta presente na DIV pai desta tabela
+    divNovaTabelaResultado.appendChild(labelTabelaResultado);
+    tabelaResultado.appendChild(divNovaTabelaResultado);
+
+    var matriz = obterTabelaComoMatriz(idTabela);
     for(var x = 0; x < matriz.length; x++){
         for(var y = 0; y < matriz.length; y++){
             matriz[x][y] = parseFloat(matriz[x][y]);
         }
     }
 
+    //Primeira matriz, foi ulizado este nome devido ao exemplo
     var calculoDoVetorPrioridade = new Array(matriz.length); 
 
     //Criando Matriz 1
@@ -46,11 +200,11 @@ function gerarMatrizResultado(){
             for(var i = 0; i < calculoDoVetorPrioridade.length; i++){
                 soma += matriz[i][c];
             }
-            calculoDoVetorPrioridade[l][c] = parseFloat((matriz[l][c]/soma).toFixed(3));
+            calculoDoVetorPrioridade[l][c] = (matriz[l][c]/soma);
+            //calculoDoVetorPrioridade[l][c] = parseFloat((matriz[l][c]/soma).toFixed(3));
         }
     }
-
-    gerarTabela("Calculo Do Vetor Prioridade", calculoDoVetorPrioridade);
+    gerarTabelaResultado(divNovaTabelaResultado.getAttribute("id"), 1, "Calculo Do Vetor Prioridade", calculoDoVetorPrioridade)
 
     //Normalizacao Parte 2 - Vetor 1 - Vetor Prioridade da Matriz 1
     var vetorPrioridade = new Array(matriz.length);
@@ -60,11 +214,13 @@ function gerarMatrizResultado(){
         for (var c = 0; c < matriz.length; c++) {
             soma += calculoDoVetorPrioridade[l][c];
         }
-        vetorPrioridade[l] =  parseFloat((soma/matriz.length).toFixed(3));
+        vetorPrioridade[l] = (soma/matriz.length);
+        //vetorPrioridade[l] =  parseFloat((soma/matriz.length).toFixed(3));
         validacao += vetorPrioridade[l];
     }
-    gerarTabela("Vetor Prioridade", vetorPrioridade);
-    gerarTabela("Validação do Vetor Prioridade", validacao);
+    gerarTabelaResultado(divNovaTabelaResultado.getAttribute("id"), 2, "Vetor Prioridade", vetorPrioridade)
+
+    gerarTabelaResultado(divNovaTabelaResultado.getAttribute("id"), 3, "Validação do Vetor Prioridade", validacao)
 
     //Normalizacao Parte 3 - Matriz 2
     //Gerando matriz resultante da multiplicação de cada célula da matriz original
@@ -84,7 +240,7 @@ function gerarMatrizResultado(){
             matriz2[l][c] = matriz[l][c] * vetorPrioridade[c];
         }
     }
-    gerarTabela("Matriz 2", matriz2);
+    gerarTabelaResultado(divNovaTabelaResultado.getAttribute("id"), 4, "Matriz 2", matriz2)
 
     //Normalizacao Parte 4 - Vetor 2 - Vetor Prioridade da Matriz 2
     //ESTA TABELA DEU DIFERENCA MINIMA DE VALORES!
@@ -97,7 +253,7 @@ function gerarMatrizResultado(){
         }
         vetor2[l] = soma;
     }
-    gerarTabela("Vetor 2", vetor2);
+    gerarTabelaResultado(divNovaTabelaResultado.getAttribute("id"), 5, "Vetor 2", vetor2)
 
     //Normalizacao Parte 4 - Vetor 3 - Vetor resultante entre Vetor1/Vetor2
     //ESTA TABELA DEU DIFERENCA MINIMA DE VALORES!
@@ -106,7 +262,7 @@ function gerarMatrizResultado(){
     for(var l = 0; l < matriz.length; l++){
         vetor3[l] = vetor2[l]/vetorPrioridade[l];
     }
-    gerarTabela("Vetor 3", vetor3);
+    gerarTabelaResultado(divNovaTabelaResultado.getAttribute("id"), 6, "Vetor 3", vetor3)
 
     //Normalização Parte 5 - Calculando o valor normalizado de acordo com o vetor 3
     //ESTA TABELA DEU DIFERENCA MINIMA DE VALORES!
@@ -116,29 +272,71 @@ function gerarMatrizResultado(){
         normalizado += vetor3[l];
     }
     normalizado /= matriz.length;
-    gerarTabela("Normalizado", normalizado);
+    gerarTabelaResultado(divNovaTabelaResultado.getAttribute("id"), 7, "Normalizado", normalizado)
 
     //Gerando valor CI pela formula
     var CI = 0;
     CI = (normalizado-matriz.length)/(matriz.length-1)
-    gerarTabela("CI", CI);
+    gerarTabelaResultado(divNovaTabelaResultado.getAttribute("id"), 8, "CI", CI)
 
     //Gerando valor CR pela formula
     var CR = 0;
     CR = CI/escalaDeSat(matriz.length);
-    CR = parseFloat((CR).toFixed(3));
-    gerarTabela("CR", CR);
+    //CR = parseFloat((CR).toFixed(3));
+    gerarTabelaResultado(divNovaTabelaResultado.getAttribute("id"), 9, "CR", CR)
+
+    return vetorPrioridade
+
 }
 
+/*
+idDivResultado = DIV que terá as tabelas adicionadas
+numeroDoPasso = Cada calculo e um passo, informar em qual calculo esta atualmente
+passoEfetuado = nome do calculo que foi efetuado (sera mostrado no cabecalho da tabela)
+matriz = valores a serem exibidos em tabela
+*/
+function gerarTabelaResultado(idDivResultado, numeroDoPasso, passoEfetuado, matriz){
 
+    var tabelaResultado = document.getElementById(idDivResultado); //DIV em que sera acrescentado a tabela gerada
 
+    //Criando uma div para ficar dentro da DIV "tabelaResultado"
+    var divTabelaInterna = document.createElement("div");
+    divTabelaInterna.setAttribute("id", idDivResultado+"_Calculo_"+numeroDoPasso);
+    // var nomeDoPassoEfetuado = document.createElement("h2"); //Desnecessario
+    // nomeDoPassoEfetuado.innerHTML = passoEfetuado;
+    // divTabelaInterna.appendChild(nomeDoPassoEfetuado);
 
-function gerarTabela(tituloTabela, matriz){
+    //Adicionando a DIV nova na DIV pai
+    tabelaResultado.appendChild(divTabelaInterna)
 
+    //Criando a tabela
+    var tabela = document.createElement("TABLE");
+    tabela.setAttribute("id", "tb_"+idDivResultado+"_Calculo_"+numeroDoPasso);
+    tabela.setAttribute("border", "1");
+    tabela.setAttribute("color", "black");
+
+    //Adicionando a tabela a DIV criada (divRanqueamento)
+    divTabelaInterna.appendChild(tabela);
+
+    //Criando cabecalho da tabela e primeira celula em branco
+    var cabecalho = tabela.createTHead();
+    var linhaCabecalho = cabecalho.insertRow(0);
+    var headerCell = document.createElement("TH");
+    headerCell.innerHTML = passoEfetuado;
+    linhaCabecalho.appendChild(headerCell);
+
+    //Criando corpo da tabela
+    var tbody = tabela.createTBody();
+    
+    //Validando se a variavel informada e apenas um numero
     if(typeof(matriz) == 'number'){
-        matriz = matriz.toString();
+        var linha = tbody.insertRow(-1);
+        cell = linha.insertCell(-1);
+        cell.innerHTML = matriz.toString()
+        return
     }
 
+    //Validando se é um array de duas dimencoes ou nao
     var is2dArray;
 
     if(matriz[0] === undefined){
@@ -147,72 +345,24 @@ function gerarTabela(tituloTabela, matriz){
         is2dArray = matriz[0].constructor === Array;
     }
 
-    divResultado = document.getElementById("tabelaResultado");
-
-    var labelTituloTabela = document.createElement("h2");
-    labelTituloTabela.innerHTML = tituloTabela;
-    divResultado.appendChild(labelTituloTabela);
-
-    var tabela = document.createElement("TABLE");
-    tabela.setAttribute("id", "tabelaTeste");
-    tabela.setAttribute("border", "1");
-    tabela.setAttribute("color", "black");
-    var linhaUnica = tabela.insertRow(0);
-    for(var x = 0; x < matriz.length; x++){
-        if(typeof(matriz) == 'string'){
-            x = matriz.length-1
+    //validando se é uma matriz
+    if(is2dArray){
+        for(var x = 0; x < matriz.length; x++){
+            var linha = tbody.insertRow(-1);
+            for(var y = 0; y < matriz[x].length; y++){
+                cell = linha.insertCell(-1);
+                cell.innerHTML = matriz[x][y];
+            }
         }
-        if(is2dArray){
-            var linha = tabela.insertRow(x);
-            for (var y = 0; y < matriz.length; y++) {
-                var cell = linha.insertCell(-1);
-
-                var select = document.createElement("SELECT");
-                select.setAttribute("id", "teste"+x+y);
-                select.setAttribute("name", "teste"+x+y);
-                if(x == y){
-                    //select.disabled = true;
-                    //select.style.backgroundColor = "black";
-                }
-
-                var option = document.createElement("option");
-
-                
-                var t = document.createTextNode(matriz[x][y]);
-
-                option.appendChild(t);
-                select.appendChild(option);
-
-                cell.appendChild(select);
-            }
-        } else{
-            var cell = linhaUnica.insertCell(-1);
-
-            var select = document.createElement("SELECT");
-            select.setAttribute("id", "teste"+x);
-            select.setAttribute("name", "teste"+x);
-            if(x == y){
-                //select.disabled = true;
-                //select.style.backgroundColor = "black";
-            }
-
-            var option = document.createElement("option");
-
-            if(Array.isArray(matriz)){
-                var t = document.createTextNode(matriz[x]);
-            }
-            else{
-                var t = document.createTextNode(matriz);
-            }
-
-            option.appendChild(t);
-            select.appendChild(option);
-
-            cell.appendChild(select);
+    }else{
+        //Se for vetor
+        var linha = tbody.insertRow(-1);
+        for(var x = 0; x < matriz.length; x++){
+            cell = linha.insertCell(-1);
+            cell.innerHTML = matriz[x];
         }
     }
-    divResultado.appendChild(tabela);
-
+    headerCell.setAttribute("colspan", tabela.rows[1].cells.length) //Alterando o cabecalho para ficar centralizado de acordo com a quantidade de celulas
 }
 
 function escalaDeSat(valor){
