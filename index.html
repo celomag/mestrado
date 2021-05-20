@@ -18,6 +18,11 @@
 	<script type="text/javascript" src="js/filtrarAlternativasRadio.js"></script>
 	<script type="text/javascript" src="js/gerarMatrizResultado.js"></script>
 	<script type="text/javascript" src="js/obterValorTabela.js"></script>
+	<script type="text/javascript" src="js/importXLSX.js"></script>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
 
 	<title>Título da Página</title>
 </head>
@@ -32,16 +37,28 @@
 	</div>
 	<div class="divAlternativa">
 		<input type="hidden" id="radioAnteriorAlternativa" name="radioAnteriorAlternativa"/>
+
 		<div class="cabecalhoAlternativa" id="cabecalhoAlternativa">
 			<h2>Alternativa</h2>
 		</div>
+
+		<span>Envie o <b>.XLSX</b> para gerar os clusters</span>
+		<form enctype="multipart/form-data">
+			<input id="upload" type=file  name="files[]">
+		</form>
+		<script>
+			document.getElementById('upload').addEventListener('change', handleFileSelect, false);
+		</script>
+	
 		<div class="corpoAlternativa" id="corpoAlternativa">
+			<textarea id="textareaId" name="textareaName" rows="5" cols="50"></textarea>
 		</div>
 	</div>
 	<div id="tabelasParaPar"></div>
 	<div id="divTabelaResultado"></div>
 	<button onclick="gerarParaPar();">Gerar para Par</button>
 	<button onclick="gerarRanqueamento();">Gerar Ranqueamento</button>
+
 	<!-- <button onclick="teste();">TESTE</button> -->
 </body>
 

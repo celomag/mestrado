@@ -1,2 +1,8 @@
 #divRatioBairro { border:2px solid #ccc; width:300px; height: 100px; overflow-y: scroll;}
 #divRatioCluster { border:2px solid #ccc; width:300px; height: 100px; overflow-y: scroll;}
+
+textarea {
+    overflow-y: scroll;
+    height: 200x;
+    resize: none; /* Remove this if you want the user to resize the textarea */
+}

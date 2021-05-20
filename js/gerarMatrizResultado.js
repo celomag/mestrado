@@ -49,7 +49,7 @@ function gerarRanqueamentoOrdenado(vetorDasPrioridades, vetorNomeDasAlternativas
         var linha = tbody.insertRow(-1);
         linha.appendChild(headerCell);
         cell = linha.insertCell(-1);
-        cell.innerHTML = parseFloat(vetorAlternativaValor[x].valor/100).toFixed(3);
+        cell.innerHTML = parseFloat(vetorAlternativaValor[x].valor*100).toFixed(3);
     }
      
 }
@@ -338,7 +338,7 @@ function gerarMatrizResultado(idTabela){
     gerarTabelaResultado(divNovaTabelaResultado.getAttribute("id"), 9, "CR", CR)
 
     if(CR > 0.1){
-        alert("Tabela: " + tabelaFonte.parentNode.firstChild.innerHTML + "\nO índice inconsistência é maior que 0,1.\nPor favor, reveja os valores atribuídos aos Critérios/Alternativas");
+        alert("Tabela: " + tabelaFonte.parentNode.firstChild.innerText + "\nO índice inconsistência é maior que 0,1.\nPor favor, reveja os valores atribuídos aos Critérios/Alternativas");
     }
 
     return vetorPrioridade
