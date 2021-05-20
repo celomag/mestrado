@@ -1,17 +1,60 @@
-function teste(){
-    var listaCriterios = document.getElementsByName('chkBoxCriterio')
-    var listaAgrupamento = document.getElementsByName("chkBoxAlternativaCluster");
-    //Percorrendo a lista original e verificando os valores selecionados
-    //Ao encontrar adiciona na lista de apenas valores selecionados
-    for (var i = 0; i < 3; i++) {
-        listaCriterios[i].checked = true;
-        listaAgrupamento[i].checked = true;
+/* 
+Gera a ultima tabela (tb_ranqueamentoOrdenado)
+Tabela que contem todos os valores da coluna "Prioridade" da tabela "tb_ranqueamento"
+Resulta em uma tabela com as alternativas e seus respectivos valores ordenados (e valores em %)
+vetorDasPrioridades = contem os valores da coluna Prioridade da tabela "tb_ranqueamento"
+vetorDasPrioridades contem valores ordenados exatamente como são apresentados na tabela "tb_ranqueamento"
+*/
+function gerarRanqueamentoOrdenado(vetorDasPrioridades, vetorNomeDasAlternativas){
+
+    //Local utilizado para ser "pai" da div/tabela resultante
+    var divRanqueamento = document.getElementById("divRanqueamento"); //DIV
+
+    //Criando a tabela
+    var tabela = document.createElement("TABLE");
+    tabela.setAttribute("id", "tb_ranqueamentoOrdenado");
+    tabela.setAttribute("border", "1");
+    tabela.setAttribute("color", "black");
+
+    //Adicionando a tabela a DIV criada (divRanqueamento)
+    divRanqueamento.appendChild(tabela);
+
+    //Criando cabecalho da tabela e primeira celula em branco
+    var cabecalho = tabela.createTHead();
+    var linhaCabecalho = cabecalho.insertRow(0);
+    var headerCell = document.createElement("TH");
+    headerCell.innerHTML = ""; //Primera coluna vazia
+    linhaCabecalho.appendChild(headerCell);
+
+    var headerCell = document.createElement("TH");
+    headerCell.innerHTML = "Ranqueamento (%)";
+    linhaCabecalho.appendChild(headerCell);
+
+    //Criando corpo da tabela
+    var tbody = tabela.createTBody()
+
+    var vetorAlternativaValor = new Array()
+
+    for (var i = 0 ; i < vetorDasPrioridades.length ; i++){
+        vetorAlternativaValor.push({alternativa: vetorNomeDasAlternativas[i], valor: vetorDasPrioridades[i]});
     }
-    listaAgrupamento[3].checked = true;
-    gerarParaPar(listaCriterios);
-    gerarRanqueamento();
+    
+    vetorAlternativaValor.sort(function(a, b) {
+        return ((a.valor > b.valor) ? -1 : ((a.valor == b.valor) ? 0 : 1));
+    });
+    
+    for(var x = 0; x <  vetorDasPrioridades.length; x++){ // x =1 pois o primeiro item e vazio
+        var headerCell = document.createElement("TH");
+        headerCell.innerHTML = vetorAlternativaValor[x].alternativa; //Acessado a celula com o nome das alternativas
+        var linha = tbody.insertRow(-1);
+        linha.appendChild(headerCell);
+        cell = linha.insertCell(-1);
+        cell.innerHTML = parseFloat(vetorAlternativaValor[x].valor/100).toFixed(3);
+    }
+     
 }
 
+// Efetua os calculos necessários e gera a tabela de ranqueamento
 function gerarRanqueamento(){
 
     if(document.getElementById("tb_criterios") == null){
@@ -86,6 +129,8 @@ function gerarRanqueamento(){
     var tabelaAlternativa = divPaiTabelaAlternativas.childNodes[1] //1 pois é a posicao da tabela dentro da div, 0 seria o H2
     var cabecalhoAlternativa = tabelaAlternativa.rows[0] //Acessando primera linha que é a do cabecalho que contem o nome da alternativa
    
+    //Vetor que irá conter o nome das alternativas para ser utilizado futuramente como parametro em outra função
+    var vetorNomeDasAlternativas = new Array()
     //Inserindo cada nome obtido no inicio da cada linha da nova tabela
     /* EXEMPLO:
                     |Criterio1|Criterio2|Criterio3|Prioridade
@@ -96,10 +141,10 @@ function gerarRanqueamento(){
     */
     for(var x = 1; x <  tabelaAlternativa.rows.length; x++){ // x =1 pois o primeiro item e vazio
         var headerCell = document.createElement("TH");
-        headerCell.innerHTML = "Prioridade";
         var linha = tbody.insertRow(-1);
-        headerCell.innerHTML =  cabecalhoAlternativa.cells[x].innerHTML; //Acessado a celula com o nome das alternativas
+        headerCell.innerHTML = cabecalhoAlternativa.cells[x].innerHTML; //Acessado a celula com o nome das alternativas
         linha.appendChild(headerCell);
+        vetorNomeDasAlternativas[x-1] = cabecalhoAlternativa.cells[x].innerHTML; //Salvando em um vetor que sera passado como parametro para criação de uma tabela no final desta função
     }
 
     // !! ESTA MATRIZ IRA CONTER TODOS OS VALORES QUE ESTAO NA TABELA CRIADA PARA PODER SER ACESSADO FACILMENTE OS VALORES SEM NECESSIDADE DE CONVERSAO
@@ -152,19 +197,25 @@ function gerarRanqueamento(){
         }
     }
 
+    //Contem os valores que estarao presentes na coluna Prioridade da tabela
+    //Utilizado para criação da tabela final de ranqueamento (Ordenada por maior %)
+    var vetorDasPrioridades = new Array();
+
     //calculoDaPrioridade
     for(var x = 1; x <  matrizDaTabela.length; x++){ // x = 1 ignora o primeiro vetor que é o vetor prioridade 
         var calculoDaPrioridade = 0
         for(var y = 0; y <  matrizDaTabela[x].length; y++){
             calculoDaPrioridade += matrizDaTabela[x][y] * matrizDaTabela[0][y] //multiplicando pelo valor do vetor prioridade da tabela criterios
         }
+        vetorDasPrioridades[x-1] = calculoDaPrioridade //-1 Pois é um novo vetor, pois o X=1 do for inicia em 1 para ignorar o primeiro vetor que é o vetor prioridade  
         var cell = tabela.rows[x+1].insertCell(-1) //+1 ignora  cabecalho da tabela
-        cell.innerHTML = calculoDaPrioridade
+        cell.innerHTML = (calculoDaPrioridade)
     }
 
+    gerarRanqueamentoOrdenado(vetorDasPrioridades, vetorNomeDasAlternativas) //Chama função responsavel para criar uma nova tabela com apenas o ranqueamento ordenado
 }
 
-//Normalizacao de uma tabela
+//Responsavel por todo o calculo de normalização de uma tabela (Critérios/Alternativas)
 function gerarMatrizResultado(idTabela){
 
     var tabelaResultado = document.getElementById("divTabelaResultado"); //DIV Pai de todas as div que contem resultados
@@ -282,11 +333,15 @@ function gerarMatrizResultado(idTabela){
     //Gerando valor CR pela formula
     var CR = 0;
     CR = CI/escalaDeSat(matriz.length);
+    //CR /= 100; //Alterando o valor para %
     //CR = parseFloat((CR).toFixed(3));
     gerarTabelaResultado(divNovaTabelaResultado.getAttribute("id"), 9, "CR", CR)
 
-    return vetorPrioridade
+    if(CR > 0.1){
+        alert("Tabela: " + tabelaFonte.parentNode.firstChild.innerHTML + "\nO índice inconsistência é maior que 0,1.\nPor favor, reveja os valores atribuídos aos Critérios/Alternativas");
+    }
 
+    return vetorPrioridade
 }
 
 /*
