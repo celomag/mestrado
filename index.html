@@ -32,7 +32,10 @@
 		<div class="cabecalhoCriterio" id="cabecalhoCriterio">
 			<h2>Critérios</h2>
 		</div>
-		<div class="corpoCriterio" id="corpoCriterio">
+		<div class="corpoCriterio" id="corpoCriterio"></div>
+		<div class="adicionarCriterioPersonalizado" id="adicionarCriterioPersonalizado">
+			<input type="text" id="inputCriterioPersonalizado" value="">
+			<button onclick="adicionarCriterioPersonalizado()">Adicionar Critério</button>
 		</div>
 	</div>
 	<div class="divAlternativa">
@@ -42,16 +45,18 @@
 			<h2>Alternativa</h2>
 		</div>
 
-		<span>Envie o <b>.XLSX</b> para gerar os clusters</span>
-		<form enctype="multipart/form-data">
-			<input id="upload" type=file  name="files[]">
-		</form>
-		<script>
-			document.getElementById('upload').addEventListener('change', handleFileSelect, false);
-		</script>
-	
-		<div class="corpoAlternativa" id="corpoAlternativa">
+		<div class="divEnvioXLSX" id="divEnvioXLSX">
+			<span>Envie o <b>.XLSX</b> para gerar os clusters</span>
+			<form enctype="multipart/form-data">
+				<input id="upload" type=file  name="files[]">
+			</form>
+			<script>
+				document.getElementById('upload').addEventListener('change', handleFileSelect, false);
+			</script>
 			<textarea id="textareaId" name="textareaName" rows="5" cols="50"></textarea>
+		</div>
+
+		<div class="corpoAlternativa" id="corpoAlternativa">
 		</div>
 	</div>
 	<div id="tabelasParaPar"></div>
@@ -59,7 +64,8 @@
 	<button onclick="gerarParaPar();">Gerar para Par</button>
 	<button onclick="gerarRanqueamento();">Gerar Ranqueamento</button>
 
-	<!-- <button onclick="teste();">TESTE</button> -->
+	<!-- <button onclick="">TESTE</button> -->
+
 </body>
 
 </html>

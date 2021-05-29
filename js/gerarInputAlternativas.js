@@ -64,6 +64,17 @@ function gerarInputAlternativas(divPai, jsonAlternativas){
 }
 
 function gerarInputAlternativaClusterXLSX(jsonAlternativasXLSX){
+
+    if(typeof jsonAlternativasXLSX[0].Nome === 'undefined'){
+        alert("Arquivo com cabeçalho incorreto!\nEsperado cabeçalho com valor: Nome\nAVISO: O cabeçalho DEVE de ser escrito EXATAMENTE como informado acima.")
+        return
+    }
+
+    if(typeof jsonAlternativasXLSX[0].cluster === 'undefined'){
+        alert("Arquivo com cabeçalho incorreto!\nEsperado cabeçalho com valor: cluster\nAVISO: O cabeçalho DEVE de ser escrito EXATAMENTE como informado acima.")
+        return
+    }
+
     var divRatioCluster = document.getElementById("divRatioCluster")
     var radioCluster = document.getElementById("radioCluster");
     var labelRadioCluster = document.getElementById("labelAlternativaCluster");
@@ -107,7 +118,7 @@ function gerarInputAlternativaClusterXLSX(jsonAlternativasXLSX){
 
         labelNovoInput = document.createElement("label");
         labelNovoInput.setAttribute("for", novoInput.id);
-        labelNovoInput.innerHTML = "Cluster "+ y + " XLSX"; //Adicionado manualmente o nome "Cluster" por se tratar de ser uma funcao voltada pra cluster
+        labelNovoInput.innerHTML = "Cluster "+ y; //Adicionado manualmente o nome "Cluster" por se tratar de ser uma funcao voltada pra cluster
 
         divRatioCluster.appendChild(novoInput);
         divRatioCluster.appendChild(labelNovoInput);
@@ -121,16 +132,24 @@ function gerarInputAlternativaClusterXLSX(jsonAlternativasXLSX){
 }
 
 //Metodo para teste
+//Adicionando os valores dos Clusters e seus respesctivos bairros em um textArea
 function mostrarClusterBairros(ClusterBairro){
-    textArea = document.getElementById("textareaId")
-
+    var textArea = document.getElementById("textareaId")
+    textArea.value = null;
     for(var i = 0; i < ClusterBairro.length; i++){
         textArea.value += "Cluster " + ClusterBairro[i].cluster + '\r\n';
         textArea.value += "(";
         for (var x = 0; x < ClusterBairro[i].bairros.length; x++){
-            textArea.value += ClusterBairro[i].bairros[x] + ", ";
+            if((x+1) != ClusterBairro[i].bairros.length){
+                textArea.value += ClusterBairro[i].bairros[x] + ", ";
+            }else{
+                textArea.value += ClusterBairro[i].bairros[x];
+            }
         }
-        textArea.value += ")" + '\r\n';
+        textArea.value += ")";
+        if((i+1) != ClusterBairro.length){
+            textArea.value += '\n\n';
+        }
     }
     
 }
