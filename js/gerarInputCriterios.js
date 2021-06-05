@@ -9,7 +9,7 @@ function gerarInputCriterios(divPai, jsonCriterios){
 
         divPai.appendChild(divCriterio);
 
-        var labelCriterio = document.createElement("label");
+        var labelCriterio = document.createElement("h3");
         labelCriterio.innerHTML = jsonCriterios.criterios[i].titulo;
         labelCriterio.setAttribute("id", "labelCriterios"+i);
         labelCriterio.setAttribute("class", "grupoCriterio");
@@ -74,7 +74,7 @@ function adicionarCriterioPersonalizado(){
         divCriterioPersonalizado.setAttribute("name", "criteriosPersonalizados");
         divCorpoCriterio.appendChild(divCriterioPersonalizado)
 
-        var labelNovoCriterio = document.createElement("label");
+        var labelNovoCriterio = document.createElement("h3");
         labelNovoCriterio.innerHTML = "Critérios Personalizados";
         labelNovoCriterio.setAttribute("id", "labelCriterios" + totalGruposDeCriterios);
         labelNovoCriterio.setAttribute("class", "grupoCriterio");
