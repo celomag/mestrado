@@ -5,8 +5,11 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	
-	<link rel="stylesheet" href="css/index.css">
+	<!-- <link rel="stylesheet" href="css/index.css"> -->
 	<script type="text/javascript" src="arquivos/alternativas.json"></script>
 	<script type="text/javascript" src="arquivos/criterios.json"></script>
 	<script type="text/javascript" src="js/popularBody.js"></script>
@@ -23,6 +26,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
+	
 
 	<title>Título da Página</title>
 </head>
@@ -34,6 +38,7 @@
 		</div>
 		<div class="corpoCriterio" id="corpoCriterio"></div>
 		<div class="adicionarCriterioPersonalizado" id="adicionarCriterioPersonalizado">
+		</br><label id="teste" style="color: red;">Critério Opcional</label></br>
 			<input type="text" id="inputCriterioPersonalizado" value="">
 			<button onclick="adicionarCriterioPersonalizado()">Adicionar Critério</button>
 		</div>
@@ -65,7 +70,20 @@
 	<button onclick="gerarRanqueamento();">Gerar Ranqueamento</button>
 
 	<!-- <button onclick="">TESTE</button> -->
-
+	<footer id="footer">
+		<ul class="icons">
+			<li><a href="#" class="icon brands fa-facebook-f">
+				<span class="label">Facebook</span></a>
+			</li>
+			<li><a href="#" class="icon brands fa-twitter">
+				<span class="label">Twitter</span></a>
+			</li>
+			<li><a href="#" class="icon brands fa-instagram">
+				<span class="label">Instagram</span></a>
+			</li>
+		</ul>
+		<p class="copyright">&copy; Untitled. Credits: <a href="http://html5up.net">HTML5 UP</a></p>
+	</footer>
 </body>
 
 </html>
