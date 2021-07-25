@@ -57,12 +57,36 @@ function gerarRanqueamentoOrdenado(vetorDasPrioridades, vetorNomeDasAlternativas
 // Efetua os calculos necessários e gera a tabela de ranqueamento
 function gerarRanqueamento(){
 
+    //Marcando como selecionado o navTabelaResultado
+    var navTabelaResultado = document.getElementById('navTabelaResultado');
+    navTabelaResultado.setAttribute("class", "w3-bar-item w3-button w3-theme-l5");
+
+    //Exibindo a div de resultados
+    var divTabelaResultado = document.getElementById('divTabelaResultado');
+    divTabelaResultado.removeAttribute("style");
+
+    //Alterando a nav par a par para deselecionado
+    var navCriterios = document.getElementById('navCriterios');
+    navCriterios.setAttribute("class", "w3-bar-item w3-button w3-hide-small w3-hover-white");
+    var navAlternativa = document.getElementById('navAlternativa');
+    navAlternativa.setAttribute("class", "w3-bar-item w3-button w3-hide-small w3-hover-white");
+    var navParAPar = document.getElementById('navParAPar');
+    navParAPar.setAttribute("class", "w3-bar-item w3-button w3-hide-small w3-hover-white");
+
+    //Ocultando demais divs
+    var divCriterio = document.getElementById('divCriterio');
+    divCriterio.setAttribute("style", "display: none !important;");
+    var divAlternativa = document.getElementById('divAlternativa');
+    divAlternativa.setAttribute("style", "display: none !important;");
+    var tabelasParaPar = document.getElementById('tabelasParaPar');
+    tabelasParaPar.setAttribute("style", "display: none !important;");
+
     if(document.getElementById("tb_criterios") == null){
         alert("Necessário gerar o para par antes de exibir o ranqueamento")
         return
     }
     if(document.getElementById("tb_ranqueamento") != null){
-        if(confirm("Já existe um ranquemento, deseja efetuar um novo?")){
+        if(confirm("Já existe um ranquemento, deseja efetuar um novo?\nCaso cancelado será mantido o ranqueamento feito anteriormente.")){
             document.getElementById("divTabelaResultado").innerHTML = "";
         }else{
             return

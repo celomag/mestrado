@@ -3,12 +3,15 @@
 
 <head>
 	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
 
-	<link rel="stylesheet" href="assets/css/main.css" />
-	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-	
+	<!-- <link rel="stylesheet" href="assets/css/main.css" />
+	<noscript>
+		<link rel="stylesheet" href="assets/css/noscript.css" />
+	</noscript> -->
+
 	<!-- <link rel="stylesheet" href="css/index.css"> -->
 	<script type="text/javascript" src="arquivos/alternativas.json"></script>
 	<script type="text/javascript" src="arquivos/criterios.json"></script>
@@ -16,6 +19,8 @@
 	<script type="text/javascript" src="js/obterArquivos.js"></script>
 	<script type="text/javascript" src="js/gerarInputCriterios.js"></script>
 	<script type="text/javascript" src="js/gerarInputAlternativas.js"></script>
+	<script type="text/javascript" src="js/validarNavCriterio.js"></script>
+	<script type="text/javascript" src="js/validarNavAlternativa.js"></script>
 	<script type="text/javascript" src="js/gerarMatriz.js"></script>
 	<script type="text/javascript" src="js/paraPar.js"></script>
 	<script type="text/javascript" src="js/filtrarAlternativasRadio.js"></script>
@@ -26,64 +31,73 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
-	
+
 
 	<title>Título da Página</title>
 </head>
 
 <body onload="popularBody()">
-	<div class="divCriterio">
-		<div class="cabecalhoCriterio" id="cabecalhoCriterio">
-			<h1>Critérios</h1>
-		</div>
-		<div class="corpoCriterio" id="corpoCriterio"></div>
-		<div class="adicionarCriterioPersonalizado" id="adicionarCriterioPersonalizado">
-		</br><label id="teste" style="color: red;">Critério Opcional</label></br>
-			<input type="text" id="inputCriterioPersonalizado" value="">
-			<button onclick="adicionarCriterioPersonalizado()">Adicionar Critério</button>
+
+	<!-- Navbar -->
+	<div class="w3-top">
+		<div class="w3-bar w3-theme w3-top w3-left-align w3-large">
+			<a class="w3-bar-item w3-button w3-right w3-hide-large w3-hover-white w3-large w3-theme-l1"
+				href="javascript:void(0)" onclick="w3_open()" style="display: block; float: center;"><i
+					class="fa fa-bars"></i></a>
+			<a href="#cabecalhoCriterio" id="navCriterios" onclick="validarNavCriterio();" class="w3-bar-item w3-button w3-theme-l5">Critérios</a>
+			<a href="#cabecalhoAlternativa" id="navAlternativa" onclick="validarNavAlternativa();"
+				class="w3-hide">Alternativas</a>
+			<a href="#tabelasParaPar" id="navParAPar" onclick="gerarParaPar();" class="w3-hide">Par a Par</a>
+			<a href="#divTabelaResultado"  id="navTabelaResultado" onclick="gerarRanqueamento();" class="w3-hide">Ranqueamento</a>
+			<!-- <a href="#" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Contact</a>
+	  <a href="#" class="w3-bar-item w3-button w3-hide-small w3-hide-medium w3-hover-white">Clients</a>
+	  <a href="#" class="w3-bar-item w3-button w3-hide-small w3-hide-medium w3-hover-white">Partners</a> -->
 		</div>
 	</div>
-	<div class="divAlternativa">
-		<input type="hidden" id="radioAnteriorAlternativa" name="radioAnteriorAlternativa"/>
 
-		<div class="cabecalhoAlternativa" id="cabecalhoAlternativa">
-			<h1>Alternativa</h1>
+	<div class="w3-main" style="margin-left:25px">
+
+		<div class="w3-row w3-padding-64" id="bla">
+			<div class="w3-twothird w3-container">
+
+				<div class="divCriterio" id="divCriterio">
+					<div class="cabecalhoCriterio" id="cabecalhoCriterio">
+						<h1>Critérios</h1>
+					</div>
+					<div class="corpoCriterio" id="corpoCriterio"></div>
+					<div class="adicionarCriterioPersonalizado" id="adicionarCriterioPersonalizado">
+						</br><label id="teste" style="color: red;">Critério Opcional</label></br>
+						<input type="text" id="inputCriterioPersonalizado" value="">
+						<button onclick="adicionarCriterioPersonalizado()">Adicionar Critério</button>
+					</div>
+				</div>
+
+				<div class="divAlternativa" id="divAlternativa" style="display: none !important;">
+					<input type="hidden" id="radioAnteriorAlternativa" name="radioAnteriorAlternativa" />
+
+					<div class="cabecalhoAlternativa" id="cabecalhoAlternativa">
+						<h1>Alternativa</h1>
+					</div>
+
+					<div class="divEnvioXLSX" id="divEnvioXLSX">
+						<span>Envie o <b>.XLSX</b> para gerar os clusters</span>
+						<form enctype="multipart/form-data">
+							<input id="upload" type=file name="files[]">
+						</form>
+						<script>
+							document.getElementById('upload').addEventListener('change', handleFileSelect, false);
+						</script>
+						<textarea id="textareaId" name="textareaName" rows="5" cols="50"></textarea>
+					</div>
+
+					<div class="corpoAlternativa" id="corpoAlternativa">
+					</div>
+				</div>
+				<div id="tabelasParaPar" style="display: none !important;"></div>
+				<div id="divTabelaResultado" style="display: none !important;"></div>
+
+			</div>
 		</div>
-
-		<div class="divEnvioXLSX" id="divEnvioXLSX">
-			<span>Envie o <b>.XLSX</b> para gerar os clusters</span>
-			<form enctype="multipart/form-data">
-				<input id="upload" type=file  name="files[]">
-			</form>
-			<script>
-				document.getElementById('upload').addEventListener('change', handleFileSelect, false);
-			</script>
-			<textarea id="textareaId" name="textareaName" rows="5" cols="50"></textarea>
-		</div>
-
-		<div class="corpoAlternativa" id="corpoAlternativa">
-		</div>
-	</div>
-	<div id="tabelasParaPar"></div>
-	<div id="divTabelaResultado"></div>
-	<button onclick="gerarParaPar();">Gerar para Par</button>
-	<button onclick="gerarRanqueamento();">Gerar Ranqueamento</button>
-
-	<!-- <button onclick="">TESTE</button> -->
-	<footer id="footer">
-		<ul class="icons">
-			<li><a href="#" class="icon brands fa-facebook-f">
-				<span class="label">Facebook</span></a>
-			</li>
-			<li><a href="#" class="icon brands fa-twitter">
-				<span class="label">Twitter</span></a>
-			</li>
-			<li><a href="#" class="icon brands fa-instagram">
-				<span class="label">Instagram</span></a>
-			</li>
-		</ul>
-		<p class="copyright">&copy; Untitled. Credits: <a href="http://html5up.net">HTML5 UP</a></p>
-	</footer>
 </body>
 
 </html>

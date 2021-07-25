@@ -41,6 +41,7 @@ function gerarInputAlternativas(divPai, jsonAlternativas){
             novoInput.setAttribute("type", "checkbox");
             novoInput.setAttribute("id","inputAlternativa"+i+"_"+y); //i = numero da alternativa (sequencia do ratio) y = numero do imput daquele ratio
             novoInput.setAttribute("name", "chkBoxAlternativa"+jsonAlternativas.alternativas[i].titulo);
+            novoInput.setAttribute("onclick", "validarNavAlternativa();");
             if(i != 0){ //Deixa pré desabilitado por nao ser pertencente ao primeiro radio
                 novoInput.disabled = true;
             }
