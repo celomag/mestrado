@@ -1,0 +1,19 @@
+/* #divRatioBairro { border:2px solid #ccc; width:300px; height: 100px; overflow-y: scroll;} */
+/* #divRatioCluster { border:2px solid #ccc; width:300px; height: 100px; overflow-y: scroll;} */
+.corpoCriterio {
+    width: 50%;
+    height: 50%;
+    margin: 100;
+}
+
+ul{
+    float: left; 
+}
+
+li{
+    width: auto;
+    height: auto;
+    margin: 0;
+    float: left;
+    overflow: hidden;
+}

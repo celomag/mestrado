@@ -1,65 +1,65 @@
 function gerarParaPar() { //Devera de ser informado OBRIGATORIAMENTE a lista de criterios
 
-    if (document.getElementById("tb_criterios") != null) {
-        if (confirm("Já existe um para par, deseja efetuar um novo?\nCaso cancelado será mantido o Par a Par feito anteriormente.")) {
-            document.getElementById("tabelasParaPar").innerHTML = "";
-            document.getElementById("divTabelaResultado").innerHTML = "";
-        } else {
-            //Marcando como selecinado a nav navParAPar
-            var navParAPar = document.getElementById('navParAPar');
-            navParAPar.setAttribute("class", "w3-bar-item w3-button w3-theme-l5");
+    // if (document.getElementById("tb_criterios") != null) {
+    //     if (confirm("Já existe um para par, deseja efetuar um novo?\nCaso cancelado será mantido o Par a Par feito anteriormente.")) {
+    //         document.getElementById("tabelasParaPar").innerHTML = "";
+    //         document.getElementById("divTabelaResultado").innerHTML = "";
+    //     } else {
+    //         //Marcando como selecinado a nav navParAPar
+    //         var navParAPar = document.getElementById('navParAPar');
+    //         navParAPar.setAttribute("class", "w3-bar-item w3-button w3-theme-l5");
 
-            //Habilitando a div tabelasParaPar
-            var tabelasParaPar = document.getElementById('tabelasParaPar');
-            tabelasParaPar.removeAttribute("style");
+    //         //Habilitando a div tabelasParaPar
+    //         var tabelasParaPar = document.getElementById('tabelasParaPar');
+    //         tabelasParaPar.removeAttribute("style");
 
-            //Desabilitando todos as divs pois deve mostrar apenas as tabelas par a par
-            var divCriterio = document.getElementById('divCriterio');
-            divCriterio.setAttribute("style", "display: none !important;");
-            var divAlternativa = document.getElementById('divAlternativa');
-            divAlternativa.setAttribute("style", "display: none !important;");
-            var divTabelaResultado = document.getElementById('divTabelaResultado');
-            divTabelaResultado.setAttribute("style", "display: none !important;");
+    //         //Desabilitando todos as divs pois deve mostrar apenas as tabelas par a par
+    //         var divCriterio = document.getElementById('divCriterio');
+    //         divCriterio.setAttribute("style", "display: none !important;");
+    //         var divAlternativa = document.getElementById('divAlternativa');
+    //         divAlternativa.setAttribute("style", "display: none !important;");
+    //         var divTabelaResultado = document.getElementById('divTabelaResultado');
+    //         divTabelaResultado.setAttribute("style", "display: none !important;");
 
-            //Deixando todas as navs habilitadas mas não selecionadas
-            var navCriterios = document.getElementById('navCriterios');
-            navCriterios.setAttribute("class", "w3-bar-item w3-button w3-hide-small w3-hover-white");
-            var navAlternativa = document.getElementById('navAlternativa');
-            navAlternativa.setAttribute("class", "w3-bar-item w3-button w3-hide-small w3-hover-white");
+    //         //Deixando todas as navs habilitadas mas não selecionadas
+    //         var navCriterios = document.getElementById('navCriterios');
+    //         navCriterios.setAttribute("class", "w3-bar-item w3-button w3-hide-small w3-hover-white");
+    //         var navAlternativa = document.getElementById('navAlternativa');
+    //         navAlternativa.setAttribute("class", "w3-bar-item w3-button w3-hide-small w3-hover-white");
 
-            //Validando se já existe um ranquemanto ativo, para poder ativar a nav do mesmo
-            if(document.getElementById("tb_ranqueamento") != null){
-                var navTabelaResultado = document.getElementById('navTabelaResultado');
-                navTabelaResultado.setAttribute("class", "w3-bar-item w3-button w3-hide-small w3-hover-white");
-            }
+    //         //Validando se já existe um ranquemanto ativo, para poder ativar a nav do mesmo
+    //         if(document.getElementById("tb_ranqueamento") != null){
+    //             var navTabelaResultado = document.getElementById('navTabelaResultado');
+    //             navTabelaResultado.setAttribute("class", "w3-bar-item w3-button w3-hide-small w3-hover-white");
+    //         }
 
-            return
-        }
-    }
+    //         return
+    //     }
+    // }
 
-    //Marcando como selecinado a nav navParAPar
-    var navParAPar = document.getElementById('navParAPar');
-    navParAPar.setAttribute("class", "w3-bar-item w3-button w3-theme-l5");
+    // //Marcando como selecinado a nav navParAPar
+    // var navParAPar = document.getElementById('navParAPar');
+    // navParAPar.setAttribute("class", "w3-bar-item w3-button w3-theme-l5");
 
-    //Habilitando a div tabelasParaPar
-    var tabelasParaPar = document.getElementById('tabelasParaPar');
-    tabelasParaPar.removeAttribute("style");
+    // //Habilitando a div tabelasParaPar
+    // var tabelasParaPar = document.getElementById('tabelasParaPar');
+    // tabelasParaPar.removeAttribute("style");
 
-    //Desabilitando todos as divs pois deve mostrar apenas as tabelas par a par
-    var divCriterio = document.getElementById('divCriterio');
-    divCriterio.setAttribute("style", "display: none !important;");
-    var divAlternativa = document.getElementById('divAlternativa');
-    divAlternativa.setAttribute("style", "display: none !important;");
-    var divTabelaResultado = document.getElementById('divTabelaResultado');
-    divTabelaResultado.setAttribute("style", "display: none !important;");
+    // //Desabilitando todos as divs pois deve mostrar apenas as tabelas par a par
+    // var divCriterio = document.getElementById('divCriterio');
+    // divCriterio.setAttribute("style", "display: none !important;");
+    // var divAlternativa = document.getElementById('divAlternativa');
+    // divAlternativa.setAttribute("style", "display: none !important;");
+    // var divTabelaResultado = document.getElementById('divTabelaResultado');
+    // divTabelaResultado.setAttribute("style", "display: none !important;");
 
-    //Deixando todas as navs habilitadas mas não selecionadas
-    var navCriterios = document.getElementById('navCriterios');
-    navCriterios.setAttribute("class", "w3-bar-item w3-button w3-hide-small w3-hover-white");
-    var navAlternativa = document.getElementById('navAlternativa');
-    navAlternativa.setAttribute("class", "w3-bar-item w3-button w3-hide-small w3-hover-white");
-    var navTabelaResultado = document.getElementById('navTabelaResultado');
-    navTabelaResultado.setAttribute("class", "w3-bar-item w3-button w3-hide-small w3-hover-white");
+    // //Deixando todas as navs habilitadas mas não selecionadas
+    // var navCriterios = document.getElementById('navCriterios');
+    // navCriterios.setAttribute("class", "w3-bar-item w3-button w3-hide-small w3-hover-white");
+    // var navAlternativa = document.getElementById('navAlternativa');
+    // navAlternativa.setAttribute("class", "w3-bar-item w3-button w3-hide-small w3-hover-white");
+    // var navTabelaResultado = document.getElementById('navTabelaResultado');
+    // navTabelaResultado.setAttribute("class", "w3-bar-item w3-button w3-hide-small w3-hover-white");
 
     //Obtendo listra de criterios de acordo com o name presente nos checkbox de critério
     var listaCriterios = document.getElementsByName('chkBoxCriterio')

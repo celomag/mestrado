@@ -12,13 +12,14 @@
 		<link rel="stylesheet" href="assets/css/noscript.css" />
 	</noscript> -->
 
-	<!-- <link rel="stylesheet" href="css/index.css"> -->
+	<link rel="stylesheet" href="css/style.css">
 	<script type="text/javascript" src="arquivos/alternativas.json"></script>
 	<script type="text/javascript" src="arquivos/criterios.json"></script>
 	<script type="text/javascript" src="js/popularBody.js"></script>
 	<script type="text/javascript" src="js/obterArquivos.js"></script>
 	<script type="text/javascript" src="js/gerarInputCriterios.js"></script>
 	<script type="text/javascript" src="js/gerarInputAlternativas.js"></script>
+	<script type="text/javascript" src="js/menuNav.js"></script>
 	<script type="text/javascript" src="js/validarNavCriterio.js"></script>
 	<script type="text/javascript" src="js/validarNavAlternativa.js"></script>
 	<script type="text/javascript" src="js/gerarMatriz.js"></script>
@@ -27,6 +28,7 @@
 	<script type="text/javascript" src="js/gerarMatrizResultado.js"></script>
 	<script type="text/javascript" src="js/obterValorTabela.js"></script>
 	<script type="text/javascript" src="js/importXLSX.js"></script>
+	<script type="text/javascript" src="js/botaoExibirRanqueamento.js"></script>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
@@ -44,11 +46,13 @@
 			<a class="w3-bar-item w3-button w3-right w3-hide-large w3-hover-white w3-large w3-theme-l1"
 				href="javascript:void(0)" onclick="w3_open()" style="display: block; float: center;"><i
 					class="fa fa-bars"></i></a>
-			<a href="#cabecalhoCriterio" id="navCriterios" onclick="validarNavCriterio();" class="w3-bar-item w3-button w3-theme-l5">Critérios</a>
-			<a href="#cabecalhoAlternativa" id="navAlternativa" onclick="validarNavAlternativa();"
+			<a href="#cabecalhoCriterio" id="navCriterios" onclick="alterarParaCriterios();"
+				class="w3-bar-item w3-button w3-theme-l5">Critérios</a>
+			<a href="#cabecalhoAlternativa" id="navAlternativa" onclick="alterarParaAlternativas();"
 				class="w3-hide">Alternativas</a>
-			<a href="#tabelasParaPar" id="navParAPar" onclick="gerarParaPar();" class="w3-hide">Par a Par</a>
-			<a href="#divTabelaResultado"  id="navTabelaResultado" onclick="gerarRanqueamento();" class="w3-hide">Ranqueamento</a>
+			<a href="#tabelasParaPar" id="navParAPar" onclick="alterarParaParAPar();" class="w3-hide">Par a Par</a>
+			<a href="#divTabelaResultado" id="navTabelaResultado" onclick="gerarRanqueamento();"
+				class="w3-hide">Ranqueamento</a>
 			<!-- <a href="#" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Contact</a>
 	  <a href="#" class="w3-bar-item w3-button w3-hide-small w3-hide-medium w3-hover-white">Clients</a>
 	  <a href="#" class="w3-bar-item w3-button w3-hide-small w3-hide-medium w3-hover-white">Partners</a> -->
@@ -66,7 +70,7 @@
 					</div>
 					<div class="corpoCriterio" id="corpoCriterio"></div>
 					<div class="adicionarCriterioPersonalizado" id="adicionarCriterioPersonalizado">
-						</br><label id="teste" style="color: red;">Critério Opcional</label></br>
+						</br><label id="teste">Critério Opcional</label></br>
 						<input type="text" id="inputCriterioPersonalizado" value="">
 						<button onclick="adicionarCriterioPersonalizado()">Adicionar Critério</button>
 					</div>
@@ -79,22 +83,30 @@
 						<h1>Alternativa</h1>
 					</div>
 
-					<div class="divEnvioXLSX" id="divEnvioXLSX">
-						<span>Envie o <b>.XLSX</b> para gerar os clusters</span>
-						<form enctype="multipart/form-data">
-							<input id="upload" type=file name="files[]">
-						</form>
-						<script>
-							document.getElementById('upload').addEventListener('change', handleFileSelect, false);
-						</script>
-						<textarea id="textareaId" name="textareaName" rows="5" cols="50"></textarea>
+					<div id="XLSX">
+						<div class="divEnvioXLSX" id="divEnvioXLSX">
+							<span>Envie o <b>.XLSX</b> para gerar os clusters</span>
+							<form enctype="multipart/form-data">
+								<input id="upload" type=file name="files[]">
+							</form>
+							<script>
+								document.getElementById('upload').addEventListener('change', handleFileSelect, false);
+							</script>
+							<textarea id="textareaId" name="textareaName" rows="5" cols="50"></textarea>
+						</div>
 					</div>
 
 					<div class="corpoAlternativa" id="corpoAlternativa">
 					</div>
 				</div>
-				<div id="tabelasParaPar" style="display: none !important;"></div>
-				<div id="divTabelaResultado" style="display: none !important;"></div>
+				<div id="tabelasParaPar" class="table-wrapper" style="display: none !important;"></div>
+				<div><input type="button" id="botaoCalculo" style="display: none !important;" value="Clique para exibir os cálculos"
+						onclick="exibirCalculosRanqueamento();">
+				</div>
+				</br>
+				<div id="divTabelaResultado" class="table-wrapper" style="display: none !important;">
+				</div>
+
 
 			</div>
 		</div>

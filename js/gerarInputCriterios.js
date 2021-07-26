@@ -29,7 +29,7 @@ function gerarInputCriterios(divPai, jsonCriterios){
             novoInput.setAttribute("type", "checkbox");
             novoInput.setAttribute("id","inputCriterio"+i+"_"+y);
             novoInput.setAttribute("name", "chkBoxCriterio");
-            novoInput.setAttribute("onclick", "validarNavCriterio();");
+            novoInput.setAttribute("onclick", "validarNavCriterio("+novoInput.getAttribute("id")+");");
 
             labelNovoInput = document.createElement("label");
             labelNovoInput.setAttribute("for", novoInput.id);
@@ -103,7 +103,7 @@ function adicionarCriterioPersonalizado(){
     novoInput.setAttribute("type", "checkbox");
     novoInput.setAttribute("id","divInputCriterio" + totalGruposDeCriterios + "_" + qntidadeDeChkBoxCriterio);
     novoInput.setAttribute("name", "chkBoxCriterio");
-    novoInput.setAttribute("onclick", "validarNavCriterio();");
+    novoInput.setAttribute("onclick", "validarNavCriterio("+novoInput.getAttribute("id")+");");
    
     labelNovoInput = document.createElement("label");
     labelNovoInput.setAttribute("for", novoInput.id);
