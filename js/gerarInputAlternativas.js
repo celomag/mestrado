@@ -95,6 +95,26 @@ function gerarInputAlternativaClusterXLSX(jsonAlternativasXLSX) {
     divRatioCluster.appendChild(radioCluster);
     divRatioCluster.appendChild(labelRadioCluster);
 
+    //Desabilitando NAV do Par a Par e do ranqueamento
+    var navParAPar = document.getElementById('navParAPar');
+    navParAPar.setAttribute("class", "w3-hide");
+    var navTabelaResultado = document.getElementById('navTabelaResultado');
+    navTabelaResultado.setAttribute("class", "w3-hide");
+
+    //Removendo as DIVS do Par a Par e do Ranqueamento
+    document.getElementById("tabelasParaPar").innerHTML = "";
+    document.getElementById("divTabelaResultado").innerHTML = "";
+
+    //Desmarcando todos os checkbox de bairros
+    var chkBoxAlternativaBairro = document.getElementsByName("chkBoxAlternativaBairro");
+    for (var y = 0; y < chkBoxAlternativaBairro.length; y++) {
+        chkBoxAlternativaBairro[y].checked = false;
+    }
+
+    //Escondendo a DIV divCheckBoxDaRadioBairro
+    var divCheckBoxDaRadioCluster = document.getElementById("divCheckBoxDaRadioBairro"); //HARDCODE utilizando o nome da DIV diretamente
+    divCheckBoxDaRadioCluster.setAttribute("style", "display: none !important;");
+
     pularLinha = document.createElement("br");
     divRatioCluster.appendChild(pularLinha);
 
