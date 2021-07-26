@@ -101,7 +101,7 @@ function gerarRanqueamento() {
         return
     }
     if (document.getElementById("tb_ranqueamento") != null) {
-        if (confirm("Já existe um ranquemento, deseja efetuar um novo?\nCaso cancelado será mantido o ranqueamento feito anteriormente.")) {
+        if (confirm("Já existe um ranqueamento, deseja efetuar um novo?\nCaso cancelado será mantido o ranqueamento feito anteriormente.")) {
             document.getElementById("divTabelaResultado").innerHTML = "";
         } else {
             return
